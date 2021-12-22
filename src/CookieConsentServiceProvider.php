@@ -22,10 +22,6 @@ class CookieConsentServiceProvider extends PackageServiceProvider
 
                 $alreadyConsentedWithCookies = Cookie::has($cookieConsentConfig['cookie_name']);
 
-//                $backgroundColor = $cookieConsentConfig['background_color'] ?? '#';
-//                $buttonPrimaryColor = $cookieConsentConfig['button_primary_color'];
-//                $buttonSecondaryColor = $cookieConsentConfig['button_secondary_color'];
-
                 $view->with(compact('alreadyConsentedWithCookies', 'cookieConsentConfig'));
             });
     }
