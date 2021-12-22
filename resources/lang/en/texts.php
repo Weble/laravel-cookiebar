@@ -1,6 +1,8 @@
 <?php
 
 return [
-    'message' => 'Your experience on this site will be improved by allowing cookies.',
-    'agree' => 'Allow cookies',
+    'message'   => 'Questo sito si avvale di cookie necessari al suo funzionamento ed utili alle finalità illustrate nella cookie policy.',
+    'agree'     => 'Agree',
+    'disagree'  => 'Usa solo i cookie di sistema',
+    'manage'    => 'Gestisci',
 ];

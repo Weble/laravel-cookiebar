@@ -38,12 +38,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\CookieConsent\\": "src"
+            "Weble\\CookieConsent\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\CookieConsent\\Test\\": "tests"
+            "Weble\\CookieConsent\\Test\\": "tests"
         }
     },
     "scripts": {
@@ -52,7 +52,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\CookieConsent\\CookieConsentServiceProvider"
+                "Weble\\CookieConsent\\CookieConsentServiceProvider"
             ]
         }
     },
