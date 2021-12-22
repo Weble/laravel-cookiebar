@@ -1,5 +1,5 @@
 {
-    "name": "weble/cookie-consent",
+    "name": "weble/laravel-cookie-consent",
     "description": "Make your Laravel app comply with the crazy EU cookie law",
     "keywords": [
         "spatie",
