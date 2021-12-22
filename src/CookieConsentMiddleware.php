@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\CookieConsent;
+namespace Weble\CookieConsent;
 
 use Closure;
 use Illuminate\Http\Response;

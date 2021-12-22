@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\CookieConsent\Test;
+namespace Weble\CookieConsent\Test;
 
 class CookieConsentTest extends TestCase
 {

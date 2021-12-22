@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\CookieConsent;
+namespace Weble\CookieConsent;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -21,6 +21,10 @@ class CookieConsentServiceProvider extends PackageServiceProvider
                 $cookieConsentConfig = config('cookie-consent');
 
                 $alreadyConsentedWithCookies = Cookie::has($cookieConsentConfig['cookie_name']);
+
+//                $backgroundColor = $cookieConsentConfig['background_color'] ?? '#';
+//                $buttonPrimaryColor = $cookieConsentConfig['button_primary_color'];
+//                $buttonSecondaryColor = $cookieConsentConfig['button_secondary_color'];
 
                 $view->with(compact('alreadyConsentedWithCookies', 'cookieConsentConfig'));
             });

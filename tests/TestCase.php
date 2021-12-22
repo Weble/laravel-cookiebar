@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\CookieConsent\Test;
+namespace Weble\CookieConsent\Test;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Spatie\CookieConsent\CookieConsentServiceProvider;
+use Weble\CookieConsent\CookieConsentServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {
@@ -44,7 +44,6 @@ abstract class TestCase extends OrchestraTestCase
     {
         return \Illuminate\Support\Str::contains($html, [
             trans('cookie-consent::texts.message'),
-            trans('cookie-consent::texts.button_text'),
         ]);
     }
 }
