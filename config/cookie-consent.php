@@ -11,10 +11,15 @@ return [
      * The name of the cookie in which we store if the user
      * has agreed to accept the conditions.
      */
-    'cookie_name' => 'laravel_cookie_consent',
+    'cookie_name' => '_cookieAdvancedAllowed',
 
     /*
      * Set the cookie duration in days.  Default is 365 * 20.
      */
     'cookie_lifetime' => 365 * 20,
+
+    /*
+     * Set the Google Tag Manager Code
+     */
+    'gtm_code' => env('GTM_CODE', null),
 ];

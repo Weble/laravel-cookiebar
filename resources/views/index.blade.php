@@ -4,9 +4,28 @@
 
     <script>
 
-        window.laravelCookieConsent = (function () {
+        window.dataLayer = window.dataLayer || [];
 
-            const COOKIE_VALUE = 1;
+        if (typeof gtag === 'undefined') {
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            window.gtag = window.gtag || gtag;
+        }
+
+        const gtag_consent = {
+            ad_storage: 'denied',
+            analytics_storage: 'denied',
+            functional_storage: 'denied',
+            personalization_storage: 'denied',
+            security_storage: 'denied'
+        };
+
+        window.laravelCookieConsent = (function (gtag_consent) {
+
+            const COOKIE_VALUE = JSON.stringify(gtag_consent);
             const COOKIE_DOMAIN = '{{ config('session.domain') ?? request()->getHost() }}';
 
             function consentWithCookies() {
@@ -51,6 +70,21 @@
                 hideCookieDialog: hideCookieDialog
             };
         })();
+
+        window.onload = function() {
+            const gtm_code  = {{ $cookieConsentConfig['gtm_code'] }};
+
+            if (!gtm_code) {
+                return;
+            }
+
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];w[l].push({'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'});const f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';j.async = true;j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl;f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', gtm_code);
+        };
     </script>
 
 @endif
