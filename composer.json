@@ -9,27 +9,21 @@
         "law",
         "eu"
     ],
-    "homepage": "https://github.com/spatie/cookie-consent",
+    "homepage": "https://github.com/Weble/laravel-cookie-consent",
     "license": "MIT",
     "authors": [
         {
-            "name": "Freek Van der Herten",
-            "email": "freek@spatie.be",
-            "homepage": "https://spatie.be",
-            "role": "Developer"
-        },
-        {
-            "name": "Willem Van Bockstal",
-            "email": "willem@spatie.be",
-            "homepage": "https://spatie.be",
+            "name": "Enea Pavanello",
+            "email": "enea@weble.it",
+            "homepage": "https://weble.it",
             "role": "Developer"
         }
     ],
     "require": {
-        "php" : "^8.0",
-        "illuminate/support": "^8.0",
-        "illuminate/view": "^8.0",
-        "illuminate/cookie": "^8.0",
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^7.0|^8.0",
+        "illuminate/view": "^7.0|^8.0",
+        "illuminate/cookie": "^7.0|^8.0",
         "spatie/laravel-package-tools": "^1.9"
     },
     "require-dev": {
