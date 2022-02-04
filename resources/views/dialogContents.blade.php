@@ -1,4 +1,4 @@
-<div x-data="laravelCookiebar" x-init="init()"
+<div x-data="laravelCookiebar" x-init="init()" x-show="showDialog"
     class="fixed bottom-0 w-full py-4 text-white bg-black shadow-top js-cookiebar cookiebar z-50">
     <div class="container mx-auto flex flex-col items-center justify-center text-center lg:text-left space-y-4">
 
@@ -32,8 +32,9 @@
     laravelCookiebar = (function () {
 
         // Settings
-        var gtm_code = "{{ config('cookiebar.gtm_code', '') }}"
-        var advanced_cookie_name = "{{ config('cookiebar.cookie_name', '') }}"
+        var gtm_code = "{{ config('cookiebar.gtm_code', '') }}";
+        var advanced_cookie_name = "{{ config('cookiebar.cookie_name', '') }}";
+        var expirationInDays = {{ config('cookiebar.cookie_lifetime', '') }};
         var gtag_consent = {
             ad_storage: 'denied',
             analytics_storage: 'denied',
@@ -52,12 +53,26 @@
         }
 
         // Default Consent
-        var initDefaultConsent = function() {
+        function initDefaultConsent() {
             console.log('initDefaultConsent');
-            gtag('consent', 'default', gtag_consent);
+
+            // se non ho il cookie, nego tutti i consenti
+            if (! cookieExists(advanced_cookie_name)) {
+                gtag('consent', 'default', gtag_consent);
+                setCookie(advanced_cookie_name, JSON.stringify(gtag_consent), expirationInDays)
+                return;
+            }
+
+            // se ho cookie, aggiorno consenti
+            var consents = getCookie(advanced_cookie_name);
+            setCookie(advanced_cookie_name, JSON.stringify(consents), expirationInDays)
+            gtag('consent', 'update', consents);
         }
 
-        var loadGTM = function (gtm_code) {
+        // load GTM scripts
+        function loadGTM(gtm_code) {
+            console.log('loadGTM');
+
             if (!gtm_code) {
                 return;
             }
@@ -70,23 +85,58 @@
             })(window, document, 'script', 'dataLayer', gtm_code);
         }
 
+        function setCookie(name, value, expirationInDays) {
+            console.log('setCookie');
+            var date = new Date();
+            date.setTime(date.getTime() + (expirationInDays * 24 * 60 * 60 * 1000));
+            document.cookie = name + '=' + value + ';expires=' + date.toUTCString()
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) === 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function cookieExists(name) {
+            return (document.cookie.split('; ').indexOf(name + '=' + gtag_consent) !== -1);
+        }
+
         // Alpine Object
         return {
-            init: function() {
+            showDialog: true,
+            showModal: false,
+            init() {
                 initDefaultConsent();
                 loadGTM(gtm_code);
             },
-            agree: function () {
-                console.log('agree')
+            agree() {
+                var consents = Object.values(gtag_consent).map(function(value) {
+                     value = 'granted';
+                     return value;
+                });
+                gtag('consent', 'update', consents);
+                setCookie(advanced_cookie_name, JSON.stringify(consents), expirationInDays)
+                this.showDialog = false;
             },
-            dismiss: function () {
+            dismiss() {
                 console.log('dismiss')
             },
-            manage: function () {
+            manage() {
                 console.log('manage')
-            }
-        }
+            },
 
+        }
 
     })()
 
