@@ -17,7 +17,7 @@ class CookieConsentServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasViews()
             ->hasTranslations()
-            ->hasViewComposer('cookie-consent::index', function (View $view) {
+            ->hasViewComposer('cookiebar::index', function (View $view) {
                 $cookieConsentConfig = config('cookie-consent');
 
                 $alreadyConsentedWithCookies = Cookie::has($cookieConsentConfig['cookie_name']);
