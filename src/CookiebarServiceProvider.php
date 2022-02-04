@@ -1,6 +1,6 @@
 <?php
 
-namespace Weble\CookieConsent;
+namespace Weble\Cookiebar;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\EncryptCookies;
