@@ -5,13 +5,13 @@ namespace Weble\CookieConsent;
 use Closure;
 use Illuminate\Http\Response;
 
-class CookieConsentMiddleware
+class CookiebarMiddleware
 {
     public function handle($request, Closure $next)
     {
         $response = $next($request);
 
-        if (! config('cookie-consent.enabled')) {
+        if (! config('cookiebar.enabled')) {
             return $response;
         }
 
@@ -39,7 +39,7 @@ class CookieConsentMiddleware
 
         $content = ''
             .substr($content, 0, $closingBodyTagPosition)
-            .view('cookie-consent::index')->render()
+            .view('cookiebar::index')->render()
             .substr($content, $closingBodyTagPosition);
 
         return $response->setContent($content);

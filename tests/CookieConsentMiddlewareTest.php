@@ -4,7 +4,7 @@ namespace Weble\CookieConsent\Test;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Weble\CookieConsent\CookieConsentMiddleware;
+use Weble\CookieConsent\CookiebarMiddleware;
 
 class CookieConsentMiddlewareTest extends TestCase
 {
@@ -13,7 +13,7 @@ class CookieConsentMiddlewareTest extends TestCase
     {
         $request = new Request();
 
-        $middleware = new CookieConsentMiddleware();
+        $middleware = new CookiebarMiddleware();
 
         $result = $middleware->handle($request, function ($request) {
             return (new Response())->setContent('<html><head></head><body></body></html>');
@@ -31,7 +31,7 @@ class CookieConsentMiddlewareTest extends TestCase
     {
         $request = new Request();
 
-        $middleware = new CookieConsentMiddleware();
+        $middleware = new CookiebarMiddleware();
 
         $result = $middleware->handle($request, function ($request) {
             return (new Response())->setContent('<html></html>');
@@ -47,7 +47,7 @@ class CookieConsentMiddlewareTest extends TestCase
     {
         config(['session.secure' => false]);
 
-        $middleware = new CookieConsentMiddleware();
+        $middleware = new CookiebarMiddleware();
 
         $result = $middleware->handle(new Request(), function () {
             return (new Response())->setContent('<html><head></head><body></body></html>');
@@ -62,7 +62,7 @@ class CookieConsentMiddlewareTest extends TestCase
     {
         config(['session.secure' => true]);
 
-        $middleware = new CookieConsentMiddleware();
+        $middleware = new CookiebarMiddleware();
 
         $result = $middleware->handle(new Request(), function () {
             return (new Response())->setContent('<html><head></head><body></body></html>');
@@ -77,7 +77,7 @@ class CookieConsentMiddlewareTest extends TestCase
     {
         config(['session.domain' => 'some domain']);
 
-        $middleware = new CookieConsentMiddleware();
+        $middleware = new CookiebarMiddleware();
 
         $result = $middleware->handle(new Request(), function () {
             return (new Response())->setContent('<html><head></head><body></body></html>');
@@ -91,7 +91,7 @@ class CookieConsentMiddlewareTest extends TestCase
     {
         config(['session.same_site' => null]);
 
-        $middleware = new CookieConsentMiddleware();
+        $middleware = new CookiebarMiddleware();
 
         $result = $middleware->handle(new Request(), function () {
             return (new Response())->setContent('<html><head></head><body></body></html>');
@@ -105,7 +105,7 @@ class CookieConsentMiddlewareTest extends TestCase
     {
         config(['session.same_site' => 'strict']);
 
-        $middleware = new CookieConsentMiddleware();
+        $middleware = new CookiebarMiddleware();
 
         $result = $middleware->handle(new Request(), function () {
             return (new Response())->setContent('<html><head></head><body></body></html>');
@@ -119,7 +119,7 @@ class CookieConsentMiddlewareTest extends TestCase
     {
         config(['session.domain' => null]);
 
-        $middleware = new CookieConsentMiddleware();
+        $middleware = new CookiebarMiddleware();
 
         $result = $middleware->handle(new Request(), function () {
             return (new Response())->setContent('<html><head></head><body></body></html>');

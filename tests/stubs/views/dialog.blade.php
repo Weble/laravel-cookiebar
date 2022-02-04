@@ -1,1 +1,1 @@
-@include('cookie-consent::dialogContents')
+@include('cookiebar::dialogContents')

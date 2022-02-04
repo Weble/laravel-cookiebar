@@ -1,6 +1,6 @@
-@if($cookieConsentConfig['enabled'] && ! $alreadyConsentedWithCookies)
+@if($cookiebarConfig['enabled'] && ! $alreadyConsentedWithCookies)
 
-    @include('cookie-consent::dialogContents')
+    @include('cookiebar::dialogContents')
 
     <script>
 
@@ -29,7 +29,7 @@
             const COOKIE_DOMAIN = '{{ config('session.domain') ?? request()->getHost() }}';
 
             function consentWithCookies() {
-                setCookie('{{ $cookieConsentConfig['cookie_name'] }}', COOKIE_VALUE, {{ $cookieConsentConfig['cookie_lifetime'] }});
+                setCookie('{{ $cookiebarConfig['cookie_name'] }}', COOKIE_VALUE, {{ $cookiebarConfig['cookie_lifetime'] }});
                 hideCookieDialog();
             }
 
@@ -38,7 +38,7 @@
             }
 
             function hideCookieDialog() {
-                const dialogs = document.getElementsByClassName('js-cookie-consent');
+                const dialogs = document.getElementsByClassName('js-cookiebar');
 
                 for (let i = 0; i < dialogs.length; ++i) {
                     dialogs[i].style.display = 'none';
@@ -55,11 +55,11 @@
                     + '{{ config('session.same_site') ? ';samesite='.config('session.same_site') : null }}';
             }
 
-            if (cookieExists('{{ $cookieConsentConfig['cookie_name'] }}')) {
+            if (cookieExists('{{ $cookiebarConfig['cookie_name'] }}')) {
                 hideCookieDialog();
             }
 
-            const buttons = document.getElementsByClassName('js-cookie-consent-agree');
+            const buttons = document.getElementsByClassName('js-cookiebar-agree');
 
             for (let i = 0; i < buttons.length; ++i) {
                 buttons[i].addEventListener('click', consentWithCookies);
@@ -72,7 +72,7 @@
         })();
 
         window.onload = function() {
-            const gtm_code  = {{ $cookieConsentConfig['gtm_code'] }};
+            const gtm_code  = {{ $cookiebarConfig['gtm_code'] }};
 
             if (!gtm_code) {
                 return;

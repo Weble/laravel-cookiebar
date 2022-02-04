@@ -1,15 +1,16 @@
 {
-    "name": "weble/laravel-cookie-consent",
+    "name": "weble/laravel-cookiebar",
     "description": "Make your Laravel app comply with the crazy EU cookie law",
     "keywords": [
-        "spatie",
+        "weble",
         "cookie-consent",
+        "cookiebar",
         "cookie",
         "comply",
         "law",
         "eu"
     ],
-    "homepage": "https://github.com/Weble/laravel-cookie-consent",
+    "homepage": "https://github.com/Weble/laravel-cookiebar",
     "license": "MIT",
     "authors": [
         {
@@ -46,7 +47,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Weble\\CookieConsent\\CookieConsentServiceProvider"
+                "Weble\\CookieConsent\\CookiebarServiceProvider"
             ]
         }
     },

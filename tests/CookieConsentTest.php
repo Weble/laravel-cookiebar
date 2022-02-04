@@ -7,8 +7,8 @@ class CookieConsentTest extends TestCase
     /** @test */
     public function it_provides_translations()
     {
-        $this->assertTranslationExists('cookie-consent::texts.message');
-        $this->assertTranslationExists('cookie-consent::texts.agree');
+        $this->assertTranslationExists('cookiebar::texts.message');
+        $this->assertTranslationExists('cookiebar::texts.agree');
     }
 
     /** @test */
@@ -22,7 +22,7 @@ class CookieConsentTest extends TestCase
     /** @test */
     public function it_will_not_show_the_cookie_consent_view_when_the_package_is_disabled()
     {
-        $this->app['config']->set('cookie-consent.enabled', false);
+        $this->app['config']->set('cookiebar.enabled', false);
 
         $html = view('layout')->render();
 
@@ -32,7 +32,7 @@ class CookieConsentTest extends TestCase
     /** @test */
     public function it_will_not_show_the_cookie_consent_view_when_the_user_has_already_consented()
     {
-        request()->cookies->set(config('cookie-consent.cookie_name'), cookie(config('cookie-consent.cookie_name'), 1));
+        request()->cookies->set(config('cookiebar.cookie_name'), cookie(config('cookiebar.cookie_name'), 1));
 
         $html = view('layout')->render();
 
@@ -44,7 +44,7 @@ class CookieConsentTest extends TestCase
     {
         $html = view('dialog')->render();
 
-        $this->assertStringContainsString('js-cookie-consent', $html);
-        $this->assertStringContainsString('js-cookie-consent-agree', $html);
+        $this->assertStringContainsString('js-cookiebar', $html);
+        $this->assertStringContainsString('js-cookiebar-agree', $html);
     }
 }

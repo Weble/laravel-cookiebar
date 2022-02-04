@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cookie;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class CookieConsentServiceProvider extends PackageServiceProvider
+class CookiebarServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -18,18 +18,18 @@ class CookieConsentServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasTranslations()
             ->hasViewComposer('cookiebar::index', function (View $view) {
-                $cookieConsentConfig = config('cookie-consent');
+                $cookiebarConfig = config('cookiebar');
 
-                $alreadyConsentedWithCookies = Cookie::has($cookieConsentConfig['cookie_name']);
+                $alreadyConsentedWithCookies = Cookie::has($cookiebarConfig['cookie_name']);
 
-                $view->with(compact('alreadyConsentedWithCookies', 'cookieConsentConfig'));
+                $view->with(compact('alreadyConsentedWithCookies', 'cookiebarConfig'));
             });
     }
 
     public function packageBooted(): void
     {
         $this->app->resolving(EncryptCookies::class, function (EncryptCookies $encryptCookies) {
-            $encryptCookies->disableFor(config('cookie-consent.cookie_name'));
+            $encryptCookies->disableFor(config('cookiebar.cookie_name'));
         });
     }
 }

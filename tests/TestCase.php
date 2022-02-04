@@ -3,14 +3,14 @@
 namespace Weble\CookieConsent\Test;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Weble\CookieConsent\CookieConsentServiceProvider;
+use Weble\CookieConsent\CookiebarServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {
     protected function getPackageProviders($app)
     {
         return [
-            CookieConsentServiceProvider::class,
+            CookiebarServiceProvider::class,
         ];
     }
 
@@ -43,7 +43,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function isConsentDialogDisplayed(string $html): bool
     {
         return \Illuminate\Support\Str::contains($html, [
-            trans('cookie-consent::texts.message'),
+            trans('cookiebar::texts.message'),
         ]);
     }
 }
