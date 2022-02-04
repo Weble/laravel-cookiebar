@@ -1,4 +1,5 @@
-<div class="fixed bottom-0 w-full py-4 text-white bg-black shadow-top js-cookiebar cookiebar z-50">
+<div x-data="cookiebar()"
+    class="fixed bottom-0 w-full py-4 text-white bg-black shadow-top js-cookiebar cookiebar z-50">
     <div class="container mx-auto flex flex-col items-center justify-center text-center lg:text-left space-y-4">
 
         <span class="cookiebar__message">
@@ -24,3 +25,10 @@
 
     </div>
 </div>
+
+<script>
+    const cookiebar = () => ({
+        init() { console.log(this.isAlpineLoaded())},
+        isAlpineLoaded: () => window.Alpine !== undefined
+    })
+</script>
