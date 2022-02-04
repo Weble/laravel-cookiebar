@@ -2,7 +2,7 @@
 
 namespace Weble\CookieConsent\Test;
 
-class CookieConsentTest extends TestCase
+class CookiebarTest extends TestCase
 {
     /** @test */
     public function it_provides_translations()

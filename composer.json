@@ -33,12 +33,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Weble\\CookieConsent\\": "src"
+            "Weble\\Cookiebar\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Weble\\CookieConsent\\Test\\": "tests"
+            "Weble\\Cookiebar\\Test\\": "tests"
         }
     },
     "scripts": {

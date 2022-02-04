@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Weble\CookieConsent\CookiebarMiddleware;
 
-class CookieConsentMiddlewareTest extends TestCase
+class CookiebarMiddlewareTest extends TestCase
 {
     /** @test */
     public function it_injects_the_if_a_closing_body_tag_is_found()
