@@ -21,5 +21,5 @@ return [
     /*
      * Set the Google Tag Manager Code
      */
-    'gtm_code' => env('GTM_CODE', null),
+    'gtm_code' => env('GTM_CODE', ''),
 ];
