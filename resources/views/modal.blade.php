@@ -3,9 +3,18 @@
         <div class="absolute inset-0 bg-blue-900 opacity-30"></div>
     </div>
 
-    <div class="bg-white rounded-md overflow-hidden shadow-md transform transition-all sm:w-full sm:max-w-3xl">
-        <p>
-            modal
-        </p>
+    <div class="bg-white rounded overflow-hidden shadow-md transform transition-all sm:w-full sm:max-w-3xl p-10">
+        <div class="flex flex-col space-y-5">
+            <div>
+                <h3 class="font-bold text-xl text-primary">
+                    {{ trans('cookiebar::modal.title') }}
+                </h3>
+            </div>
+            <div >
+                <p>
+                    {{ trans('cookiebar::modal.description') }}
+                </p>
+            </div>
+        </div>
     </div>
 </div>
