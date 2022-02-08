@@ -6,14 +6,19 @@
     <div class="bg-white rounded overflow-hidden shadow-md transform transition-all sm:w-full sm:max-w-3xl p-10">
         <div class="flex flex-col space-y-5">
             <div>
-                <h3 class="font-bold text-xl text-primary">
+                <h1 class="font-bold text-xl text-primary">
                     {{ trans('cookiebar::modal.title') }}
-                </h3>
+                </h1>
             </div>
-            <div >
+            <div>
                 <p>
                     {{ trans('cookiebar::modal.description') }}
                 </p>
+            </div>
+            <div>
+                @foreach($consents as $consent)
+
+                @endforeach
             </div>
         </div>
     </div>

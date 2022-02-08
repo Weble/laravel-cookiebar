@@ -22,4 +22,35 @@ return [
      * Set the Google Tag Manager Code
      */
     'gtm_code' => env('GTM_CODE', ''),
+
+    /*
+     * Consents
+     */
+    'gtag_consent' => [
+        'ad_storage' => [
+            'value'         => 'denied',
+            'description'   => 'ad_storage',
+            'enabled'       => true,
+        ],
+        'analytics_storage' => [
+            'value'         => 'denied',
+            'description'   => 'analytics_storage',
+            'enabled'       => true,
+        ],
+        'functional_storage' => [
+            'value'         => 'denied',
+            'description'   => 'functional_storage',
+            'enabled'       => true,
+        ],
+        'personalization_storage' => [
+            'value'         => 'denied',
+            'description'   => 'personalization_storage',
+            'enabled'       => true,
+        ],
+        'security_storage' => [
+            'value'         => 'denied',
+            'description'   => 'security_storage',
+            'enabled'       => true,
+        ]
+    ]
 ];
