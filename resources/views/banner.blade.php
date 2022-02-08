@@ -19,7 +19,7 @@
             </div>
 
             <button data-cookiebar="update-consent"
-                class="mt-2 ml-8 underline text-xs js-cookiebar-dismiss cookiebar__dismiss">
+                class="mt-2 ml-8 underline text-xs js-cookiebar-dismiss">
                 {{ trans('cookiebar::texts.dismiss') }}
             </button>
         </div>

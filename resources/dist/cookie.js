@@ -307,8 +307,6 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tiny_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tiny-cookie */ "./node_modules/tiny-cookie/es/index.js");
 /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helper */ "./resources/js/helper.js");
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
 
 
 
@@ -316,7 +314,9 @@ window.cookiebar = function () {
   return {
     config: {},
     configure: configure,
-    init: init
+    init: init,
+    setupTemplate: setupTemplate,
+    loadGTM: loadGTM
   };
 }(); // 1
 
@@ -340,51 +340,33 @@ function init() {
 
   gtag('consent', 'default', this.config.gtag_consent);
   return this;
-} // 2 - BANNER OPERATIONS ON COOKIE on page load
+} // 3
 
 
-(window.$load = window.$load || []).unshift(function (_ref, next) {
-  _objectDestructuringEmpty(_ref);
+function setupTemplate() {
+  var _this = this;
 
-  // const value = JSON.parse(getCookie(advanced_cookie_name));
-  //
-  // //  If cookie is already setted, update consent, check consents in modal and ignore banner
-  // if (value !== null) {
-  //
-  //     gtag('consent', 'update', value);
-  //
-  //     // custom event if needed
-  //     window.dataLayer.push({
-  //         event: 'cookie_advanced_consent_updated'
-  //     });
-  //
-  //     // TODO: cambiare
-  //     // // Check statuses
-  //     // $.each(value, (consent, status) => {
-  //     //
-  //     //     const checkbox = $('#tm-cookie-banner-custom-modal').find('[name="' + consent + '"]');
-  //     //
-  //     //     if (status == 'granted') {
-  //     //         checkbox.attr('checked', true);
-  //     //     }
-  //     //
-  //     // });
-  //
-  //     next();
-  //
-  //     return;
-  // }
-  setup(); // setupBanner();
-  // setupModal();
+  // update
+  _addClickTo('[data-cookiebar="update-consent"]', function (event) {
+    return _updateConsent(event, _this.config);
+  }); // show modal
 
-  next();
-}); // 3 - LOAD GTM AFTER BANNER
 
-window.$load.push(function (_ref2, next) {
-  _objectDestructuringEmpty(_ref2);
+  _addClickTo('[data-cookiebar="modal-show"]', function () {
+    return console.log('modal-show');
+  }); // hide modal
 
-  if (!gtm_code) {
-    next();
+
+  _addClickTo('[data-cookiebar="modal-hide"]', function () {
+    return console.log('modal-hide');
+  });
+
+  return this;
+} // 4
+
+
+function loadGTM() {
+  if (!this.config.gtm_code) {
     return;
   }
 
@@ -400,77 +382,51 @@ window.$load.push(function (_ref2, next) {
     j.async = true;
     j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
     f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', gtm_code);
+  })(window, document, 'script', 'dataLayer', this.config.gtm_code);
 
-  next();
-}); // domReady( () => {
-//     console.log('ready');
-//
-//     let $load = window.$load || [];
-//     let $cookiebar = window.$cookiebar || {};
-//
-//     function load(stack, config) {
-//         stack.length && stack.shift()(
-//             config, () => load(stack, config)
-//         );
-//     }
-//
-//     load($load, $cookiebar);
-// });
+  return this;
+}
 
-/*
- * Update consent
- */
-
-function cookieAdvancedUpdateConsent(event) {
+function _updateConsent(event, config) {
   var target = event.target;
-  console.log('update-consent: ', target); // AGREE: all consents granted
+  var advanced_cookie_name = config.advanced_cookie_name,
+      expirationInDays = config.expirationInDays,
+      gtag_consent = config.gtag_consent; // AGREE: all consents granted
 
   if ((0,_helper__WEBPACK_IMPORTED_MODULE_1__.hasClass)(target, 'js-cookiebar-agree')) {
     Object.keys(gtag_consent).forEach(function (key) {
       gtag_consent[key] = 'granted';
     });
-  } // $('#tm-cookie-banner-custom-modal').hide();
-  // $('#tm-cookie-banner').hide();
+  } // DISMISS: all consents denied
 
+
+  if ((0,_helper__WEBPACK_IMPORTED_MODULE_1__.hasClass)(target, 'js-cookiebar-dismiss')) {
+    Object.keys(gtag_consent).forEach(function (key) {
+      gtag_consent[key] = 'danied';
+    });
+  }
 
   (0,tiny_cookie__WEBPACK_IMPORTED_MODULE_0__.setCookie)(advanced_cookie_name, JSON.stringify(gtag_consent), {
     expires: expirationInDays
   });
-  gtag('consent', 'update', gtag_consent); // custom event if needed
-
-  window.dataLayer.push({
-    event: 'cookie_advanced_consent_updated'
+  gtag('consent', 'update', gtag_consent);
+  dataLayer.push({
+    'event': 'cookie_advanced_consent_updated'
   });
-  /** To Edit depending on the application **/
-
-  window.dataLayer.push({
-    event: 'gtm.init_consent'
+  dataLayer.push({
+    'event': 'gtm.init_consent'
   });
 }
 
-function setup() {
-  // show consent modal
-  document.querySelectorAll('[data-cookiebar="modal-show"]').forEach(function (button) {
-    return button.addEventListener("click", function () {
-      console.log('modal-show');
-    });
-  }); // update
+function _addClickTo(selector, cb) {
+  var elements = document.querySelectorAll(selector);
 
-  document.querySelectorAll('[data-cookiebar="update-consent"]').forEach(function (button) {
-    return button.addEventListener("click", cookieAdvancedUpdateConsent);
-  });
-}
+  if (elements.length <= 0) {
+    return;
+  }
 
-function setupBanner() {
-  // update
-  document.querySelector('[data-cookiebar="update-consent"]').addEventListener("click", cookieAdvancedUpdateConsent);
-}
-
-function setupModal() {
-  // close
-  document.querySelector('[data-cookiebar="modal-close"]').addEventListener("click", function () {
-    console.log('modal-close');
+  elements.forEach(function (button) {
+    return button.addEventListener("click", cb);
   });
 }
 })();
