@@ -1,0 +1,32 @@
+{
+  "name": "laravel-cookiebar",
+  "version": "1.0.0",
+  "description": "## Installation",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "tiny-cookie": "^2.3.2"
+  },
+  "devDependencies": {
+    "laravel-mix": "^6.0.41"
+  },
+  "scripts": {
+    "dev": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "mix --production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Weble/laravel-cookiebar.git"
+  },
+  "author": "Enea Pavanello",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Weble/laravel-cookiebar/issues"
+  },
+  "homepage": "https://github.com/Weble/laravel-cookiebar#readme"
+}
