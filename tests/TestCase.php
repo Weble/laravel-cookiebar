@@ -1,9 +1,9 @@
 <?php
 
-namespace Weble\CookieConsent\Test;
+namespace Weble\Cookiebar\Test;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Weble\CookieConsent\CookiebarServiceProvider;
+use Weble\Cookiebar\CookiebarServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {

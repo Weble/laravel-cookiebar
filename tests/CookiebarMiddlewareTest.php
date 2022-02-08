@@ -1,10 +1,10 @@
 <?php
 
-namespace Weble\CookieConsent\Test;
+namespace Weble\Cookiebar\Test;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Weble\CookieConsent\CookiebarMiddleware;
+use Weble\Cookiebar\CookiebarMiddleware;
 
 class CookiebarMiddlewareTest extends TestCase
 {

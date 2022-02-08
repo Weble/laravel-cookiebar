@@ -1,6 +1,6 @@
 <?php
 
-namespace Weble\CookieConsent;
+namespace Weble\Cookiebar;
 
 use Closure;
 use Illuminate\Http\Response;

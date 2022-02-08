@@ -1,6 +1,6 @@
 <?php
 
-namespace Weble\CookieConsent\Test;
+namespace Weble\Cookiebar\Test;
 
 class CookiebarTest extends TestCase
 {

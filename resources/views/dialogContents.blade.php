@@ -53,24 +53,25 @@
         }
 
         // Default Consent
-        function initDefaultConsent() {
-            console.log('initDefaultConsent');
+        function setDefaultConsentState() {
+            console.log('setDefaultConsentState');
 
             // se non ho il cookie, nego tutti i consenti
             if (! cookieExists(advanced_cookie_name)) {
                 gtag('consent', 'default', gtag_consent);
+                console.log(JSON.stringify(gtag_consent));
                 setCookie(advanced_cookie_name, JSON.stringify(gtag_consent), expirationInDays)
                 return;
             }
 
             // se ho cookie, aggiorno consenti
-            var consents = getCookie(advanced_cookie_name);
-            setCookie(advanced_cookie_name, JSON.stringify(consents), expirationInDays)
-            gtag('consent', 'update', consents);
+            // var consents = getCookie(advanced_cookie_name);
+            // setCookie(advanced_cookie_name, JSON.stringify(consents), expirationInDays)
+            // gtag('consent', 'update', consents);
         }
 
         // load GTM scripts
-        function loadGTM(gtm_code) {
+        function loadGTM() {
             console.log('loadGTM');
 
             if (!gtm_code) {
@@ -87,9 +88,10 @@
 
         function setCookie(name, value, expirationInDays) {
             console.log('setCookie');
+            const valueStr = encodeURIComponent(value);
             var date = new Date();
             date.setTime(date.getTime() + (expirationInDays * 24 * 60 * 60 * 1000));
-            document.cookie = name + '=' + value + ';expires=' + date.toUTCString()
+            document.cookie = name + '=' + valueStr + ';expires=' + date.toUTCString()
         }
 
         function getCookie(cname) {
@@ -117,16 +119,18 @@
             showDialog: true,
             showModal: false,
             init() {
-                initDefaultConsent();
-                loadGTM(gtm_code);
+                setDefaultConsentState();
+                loadGTM();
             },
             agree() {
-                var consents = Object.values(gtag_consent).map(function(value) {
-                     value = 'granted';
-                     return value;
+                Object.keys(gtag_consent).forEach(function (key){
+                    gtag_consent[key] = 'granted'
                 });
-                gtag('consent', 'update', consents);
-                setCookie(advanced_cookie_name, JSON.stringify(consents), expirationInDays)
+                setCookie(advanced_cookie_name, JSON.stringify(gtag_consent), expirationInDays)
+                gtag('consent', 'update', gtag_consent);
+                // dataLayer.push({
+                //     event: 'gtm.init_consent'
+                // });
                 this.showDialog = false;
             },
             dismiss() {
