@@ -20,9 +20,7 @@ class CookiebarServiceProvider extends PackageServiceProvider
             ->hasTranslations()
             ->hasViewComposer('cookiebar::index', function (View $view) {
                 $cookiebarConfig = config('cookiebar');
-
                 $alreadyConsentedWithCookies = Cookie::has($cookiebarConfig['cookie_name']);
-
                 $view->with(compact('alreadyConsentedWithCookies', 'cookiebarConfig'));
             });
     }
