@@ -15,9 +15,11 @@
                     {{ trans('cookiebar::modal.description') }}
                 </p>
             </div>
-            <div>
-                @foreach($consents as $consent)
-
+            <div class="flex flex-col divide-y">
+                @foreach($cookiebarConfig['gtag_consent'] as $consent)
+                    <div class="py-3">
+                        {{ trans($consent['label']) }}
+                    </div>
                 @endforeach
             </div>
         </div>

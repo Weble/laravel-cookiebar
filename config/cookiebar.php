@@ -28,26 +28,31 @@ return [
      */
     'gtag_consent' => [
         'ad_storage' => [
+            'label'         => 'ad_storage',
             'value'         => 'denied',
             'description'   => 'ad_storage',
             'enabled'       => true,
         ],
         'analytics_storage' => [
+            'label'         => 'analytics_storage',
             'value'         => 'denied',
             'description'   => 'analytics_storage',
             'enabled'       => true,
         ],
         'functional_storage' => [
+            'label'         => 'functional_storage',
             'value'         => 'denied',
             'description'   => 'functional_storage',
             'enabled'       => true,
         ],
         'personalization_storage' => [
+            'label'         => 'personalization_storage',
             'value'         => 'denied',
             'description'   => 'personalization_storage',
             'enabled'       => true,
         ],
         'security_storage' => [
+            'label'         => 'security_storage',
             'value'         => 'denied',
             'description'   => 'security_storage',
             'enabled'       => true,
