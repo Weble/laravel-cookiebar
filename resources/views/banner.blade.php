@@ -1,4 +1,4 @@
-<div
+<div id="cookiebar-banner"
     class="fixed bottom-0 w-full py-4 text-white bg-black shadow-top js-cookiebar cookiebar z-50">
     <div class="container mx-auto flex flex-col items-center justify-center text-center lg:text-left space-y-4">
 

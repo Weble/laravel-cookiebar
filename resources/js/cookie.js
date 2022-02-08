@@ -24,14 +24,23 @@ function init() {
         }
         window.gtag = window.gtag || gtag;
     }
-    gtag('consent', 'default', this.config.gtag_consent);
+
+    const value = JSON.parse(getCookie(this.config.advanced_cookie_name));
+
+    if (! value) {
+        gtag('consent', 'default', this.config.gtag_consent);
+        return this;
+    }
+
+    Object.assign(this.config.gtag_consent, value);
+    _updateConsent(this.config);
     return this;
 }
 
 // 3
 function setupTemplate() {
     // update
-    _addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsent(event, this.config) );
+    _addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
 
     // show modal
     _addClickTo('[data-cookiebar="modal-show"]', () => console.log('modal-show'));
@@ -58,10 +67,12 @@ function loadGTM() {
     return this;
 }
 
-function _updateConsent(event, config) {
+
+
+function _updateConsentEvent(event, config) {
     const target = event.target;
 
-    const {advanced_cookie_name, expirationInDays, gtag_consent} = config;
+    const { gtag_consent } = config;
 
     // AGREE: all consents granted
     if (hasClass(target, 'js-cookiebar-agree')) {
@@ -77,6 +88,12 @@ function _updateConsent(event, config) {
         });
     }
 
+    _updateConsent(config);
+}
+
+function _updateConsent(config) {
+    const {advanced_cookie_name, expirationInDays, gtag_consent} = config;
+
     setCookie(advanced_cookie_name, JSON.stringify( gtag_consent), { expires: expirationInDays });
 
     gtag('consent', 'update', gtag_consent);
@@ -88,6 +105,8 @@ function _updateConsent(event, config) {
     dataLayer.push({
         'event': 'gtm.init_consent'
     });
+
+    _hide('cookiebar-banner')
 }
 
 function _addClickTo(selector, cb) {
@@ -99,3 +118,18 @@ function _addClickTo(selector, cb) {
     elements.forEach((button) => button.addEventListener("click", cb))
 }
 
+function _hide(id) {
+    const el = document.getElementById(id)
+    if (! el ) {
+        return;
+    }
+    el.style.display = "none";
+}
+
+// function _show(id) {
+//     const el = document.getElementById(id)
+//     if (! el ) {
+//         return;
+//     }
+//     el.style.display = "block";
+// }

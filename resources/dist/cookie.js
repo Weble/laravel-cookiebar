@@ -338,7 +338,17 @@ function init() {
     window.gtag = window.gtag || _gtag;
   }
 
-  gtag('consent', 'default', this.config.gtag_consent);
+  var value = JSON.parse((0,tiny_cookie__WEBPACK_IMPORTED_MODULE_0__.getCookie)(this.config.advanced_cookie_name));
+
+  if (!value) {
+    gtag('consent', 'default', this.config.gtag_consent);
+    return this;
+  }
+
+  Object.assign(this.config.gtag_consent, value);
+
+  _updateConsent(this.config);
+
   return this;
 } // 3
 
@@ -348,7 +358,7 @@ function setupTemplate() {
 
   // update
   _addClickTo('[data-cookiebar="update-consent"]', function (event) {
-    return _updateConsent(event, _this.config);
+    return _updateConsentEvent(event, _this.config);
   }); // show modal
 
 
@@ -387,11 +397,9 @@ function loadGTM() {
   return this;
 }
 
-function _updateConsent(event, config) {
+function _updateConsentEvent(event, config) {
   var target = event.target;
-  var advanced_cookie_name = config.advanced_cookie_name,
-      expirationInDays = config.expirationInDays,
-      gtag_consent = config.gtag_consent; // AGREE: all consents granted
+  var gtag_consent = config.gtag_consent; // AGREE: all consents granted
 
   if ((0,_helper__WEBPACK_IMPORTED_MODULE_1__.hasClass)(target, 'js-cookiebar-agree')) {
     Object.keys(gtag_consent).forEach(function (key) {
@@ -406,6 +414,13 @@ function _updateConsent(event, config) {
     });
   }
 
+  _updateConsent(config);
+}
+
+function _updateConsent(config) {
+  var advanced_cookie_name = config.advanced_cookie_name,
+      expirationInDays = config.expirationInDays,
+      gtag_consent = config.gtag_consent;
   (0,tiny_cookie__WEBPACK_IMPORTED_MODULE_0__.setCookie)(advanced_cookie_name, JSON.stringify(gtag_consent), {
     expires: expirationInDays
   });
@@ -416,6 +431,8 @@ function _updateConsent(event, config) {
   dataLayer.push({
     'event': 'gtm.init_consent'
   });
+
+  _hide('cookiebar-banner');
 }
 
 function _addClickTo(selector, cb) {
@@ -429,6 +446,22 @@ function _addClickTo(selector, cb) {
     return button.addEventListener("click", cb);
   });
 }
+
+function _hide(id) {
+  var el = document.getElementById(id);
+
+  if (!el) {
+    return;
+  }
+
+  el.style.display = "none";
+} // function _show(id) {
+//     const el = document.getElementById(id)
+//     if (! el ) {
+//         return;
+//     }
+//     el.style.display = "block";
+// }
 })();
 
 /******/ })()
