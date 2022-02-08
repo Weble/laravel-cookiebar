@@ -15,6 +15,7 @@ class CookiebarServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-cookiebar')
             ->hasConfigFile()
+            ->hasAssets()
             ->hasViews()
             ->hasTranslations()
             ->hasViewComposer('cookiebar::index', function (View $view) {
