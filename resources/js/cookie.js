@@ -1,5 +1,5 @@
 import { getCookie, setCookie } from 'tiny-cookie';
-import { hasClass } from './helper'
+import { hasClass, hide, show , addClickTo } from './helper'
 
 window.cookiebar = (() => ({
     config: {},
@@ -44,13 +44,13 @@ function init() {
 // 3
 function setupTemplate() {
     // update
-    _addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
+    addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
 
     // show modal
-    _addClickTo('[data-cookiebar="modal-show"]', () => _showModal(this.config.gtag_consent));
+    addClickTo('[data-cookiebar="modal-show"]', () => _showModal(this.config.gtag_consent));
 
     // hide modal
-    _addClickTo('[data-cookiebar="modal-hide"]', () => _hide(document.getElementById('cookiebar-modal')));
+    addClickTo('[data-cookiebar="modal-hide"]', () => hide(document.getElementById('cookiebar-modal')));
 
     return this;
 }
@@ -134,31 +134,8 @@ function _updateConsent(config) {
         'event': 'gtm.init_consent'
     });
 
-    _hide(document.getElementById('cookiebar-banner'))
-    _hide(document.getElementById('cookiebar-modal'))
-}
-
-function _addClickTo(selector, cb) {
-    const elements = document.querySelectorAll(selector)
-    if (elements.length <= 0) {
-        return;
-    }
-
-    elements.forEach((button) => button.addEventListener("click", cb))
-}
-
-function _hide(el) {
-    if (! el) {
-        return;
-    }
-    el.style.display = "none";
-}
-
-function _show(el) {
-    if (! el) {
-        return;
-    }
-    el.style.display = "block";
+    hide(document.getElementById('cookiebar-banner'))
+    hide(document.getElementById('cookiebar-modal'))
 }
 
 function _showModal(consents) {
@@ -175,5 +152,5 @@ function _showModal(consents) {
             checkbox.checked = consents[key] === 'granted'
         });
 
-    _show(document.getElementById('cookiebar-modal'))
+    show(document.getElementById('cookiebar-modal'))
 }
