@@ -2,6 +2,173 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./resources/js/cookie.js":
+/*!********************************!*\
+  !*** ./resources/js/cookie.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var tiny_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tiny-cookie */ "./node_modules/tiny-cookie/es/index.js");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helper */ "./resources/js/helper.js");
+
+
+
+window.cookiebar = function () {
+  return {
+    config: {},
+    configure: configure,
+    init: init,
+    setupTemplate: setupTemplate,
+    loadGTM: loadGTM
+  };
+}(); // 1
+
+
+function configure(config) {
+  Object.assign(this.config, config);
+  return this;
+} // 2
+
+
+function init() {
+  window.dataLayer = window.dataLayer || [];
+
+  if (typeof gtag === 'undefined') {
+    var _gtag = function _gtag() {
+      dataLayer.push(arguments);
+    };
+
+    window.gtag = window.gtag || _gtag;
+  }
+
+  var value = JSON.parse((0,tiny_cookie__WEBPACK_IMPORTED_MODULE_0__.getCookie)(this.config.advanced_cookie_name));
+
+  if (!value) {
+    gtag('consent', 'default', this.config.gtag_consent);
+    return this;
+  }
+
+  Object.assign(this.config.gtag_consent, value);
+
+  _updateConsent(this.config);
+
+  return this;
+} // 3
+
+
+function setupTemplate() {
+  var _this = this;
+
+  // update
+  _addClickTo('[data-cookiebar="update-consent"]', function (event) {
+    return _updateConsentEvent(event, _this.config);
+  }); // show modal
+
+
+  _addClickTo('[data-cookiebar="modal-show"]', function () {
+    return console.log('modal-show');
+  }); // hide modal
+
+
+  _addClickTo('[data-cookiebar="modal-hide"]', function () {
+    return console.log('modal-hide');
+  });
+
+  return this;
+} // 4
+
+
+function loadGTM() {
+  if (!this.config.gtm_code) {
+    return;
+  }
+
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({
+      'gtm.start': new Date().getTime(),
+      event: 'gtm.js'
+    });
+    var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', this.config.gtm_code);
+
+  return this;
+}
+
+function _updateConsentEvent(event, config) {
+  var target = event.target;
+  var gtag_consent = config.gtag_consent; // AGREE: all consents granted
+
+  if ((0,_helper__WEBPACK_IMPORTED_MODULE_1__.hasClass)(target, 'js-cookiebar-agree')) {
+    Object.keys(gtag_consent).forEach(function (key) {
+      gtag_consent[key] = 'granted';
+    });
+  } // DISMISS: all consents denied
+
+
+  if ((0,_helper__WEBPACK_IMPORTED_MODULE_1__.hasClass)(target, 'js-cookiebar-dismiss')) {
+    Object.keys(gtag_consent).forEach(function (key) {
+      gtag_consent[key] = 'danied';
+    });
+  }
+
+  _updateConsent(config);
+}
+
+function _updateConsent(config) {
+  var advanced_cookie_name = config.advanced_cookie_name,
+      expirationInDays = config.expirationInDays,
+      gtag_consent = config.gtag_consent;
+  (0,tiny_cookie__WEBPACK_IMPORTED_MODULE_0__.setCookie)(advanced_cookie_name, JSON.stringify(gtag_consent), {
+    expires: expirationInDays
+  });
+  gtag('consent', 'update', gtag_consent);
+  dataLayer.push({
+    'event': 'cookie_advanced_consent_updated'
+  });
+  dataLayer.push({
+    'event': 'gtm.init_consent'
+  });
+
+  _hide('cookiebar-banner');
+}
+
+function _addClickTo(selector, cb) {
+  var elements = document.querySelectorAll(selector);
+
+  if (elements.length <= 0) {
+    return;
+  }
+
+  elements.forEach(function (button) {
+    return button.addEventListener("click", cb);
+  });
+}
+
+function _hide(id) {
+  var el = document.getElementById(id);
+
+  if (!el) {
+    return;
+  }
+
+  el.style.display = "none";
+} // function _show(id) {
+//     const el = document.getElementById(id)
+//     if (! el ) {
+//         return;
+//     }
+//     el.style.display = "block";
+// }
+
+/***/ }),
+
 /***/ "./resources/js/helper.js":
 /*!********************************!*\
   !*** ./resources/js/helper.js ***!
@@ -15,6 +182,18 @@ __webpack_require__.r(__webpack_exports__);
 function hasClass(element, cssClass) {
   return element.classList.contains(cssClass);
 }
+
+/***/ }),
+
+/***/ "./resources/css/cookie.css":
+/*!**********************************!*\
+  !*** ./resources/css/cookie.css ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 
@@ -268,7 +447,42 @@ function convert(opts) {
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -297,172 +511,68 @@ function convert(opts) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"/resources/dist/cookie": 0,
+/******/ 			"resources/dist/cookie": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			return __webpack_require__.O(result);
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = self["webpackChunklaravel_cookiebar"] = self["webpackChunklaravel_cookiebar"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/*!********************************!*\
-  !*** ./resources/js/cookie.js ***!
-  \********************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var tiny_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tiny-cookie */ "./node_modules/tiny-cookie/es/index.js");
-/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helper */ "./resources/js/helper.js");
-
-
-
-window.cookiebar = function () {
-  return {
-    config: {},
-    configure: configure,
-    init: init,
-    setupTemplate: setupTemplate,
-    loadGTM: loadGTM
-  };
-}(); // 1
-
-
-function configure(config) {
-  Object.assign(this.config, config);
-  return this;
-} // 2
-
-
-function init() {
-  window.dataLayer = window.dataLayer || [];
-
-  if (typeof gtag === 'undefined') {
-    var _gtag = function _gtag() {
-      dataLayer.push(arguments);
-    };
-
-    window.gtag = window.gtag || _gtag;
-  }
-
-  var value = JSON.parse((0,tiny_cookie__WEBPACK_IMPORTED_MODULE_0__.getCookie)(this.config.advanced_cookie_name));
-
-  if (!value) {
-    gtag('consent', 'default', this.config.gtag_consent);
-    return this;
-  }
-
-  Object.assign(this.config.gtag_consent, value);
-
-  _updateConsent(this.config);
-
-  return this;
-} // 3
-
-
-function setupTemplate() {
-  var _this = this;
-
-  // update
-  _addClickTo('[data-cookiebar="update-consent"]', function (event) {
-    return _updateConsentEvent(event, _this.config);
-  }); // show modal
-
-
-  _addClickTo('[data-cookiebar="modal-show"]', function () {
-    return console.log('modal-show');
-  }); // hide modal
-
-
-  _addClickTo('[data-cookiebar="modal-hide"]', function () {
-    return console.log('modal-hide');
-  });
-
-  return this;
-} // 4
-
-
-function loadGTM() {
-  if (!this.config.gtm_code) {
-    return;
-  }
-
-  (function (w, d, s, l, i) {
-    w[l] = w[l] || [];
-    w[l].push({
-      'gtm.start': new Date().getTime(),
-      event: 'gtm.js'
-    });
-    var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != 'dataLayer' ? '&l=' + l : '';
-    j.async = true;
-    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-    f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', this.config.gtm_code);
-
-  return this;
-}
-
-function _updateConsentEvent(event, config) {
-  var target = event.target;
-  var gtag_consent = config.gtag_consent; // AGREE: all consents granted
-
-  if ((0,_helper__WEBPACK_IMPORTED_MODULE_1__.hasClass)(target, 'js-cookiebar-agree')) {
-    Object.keys(gtag_consent).forEach(function (key) {
-      gtag_consent[key] = 'granted';
-    });
-  } // DISMISS: all consents denied
-
-
-  if ((0,_helper__WEBPACK_IMPORTED_MODULE_1__.hasClass)(target, 'js-cookiebar-dismiss')) {
-    Object.keys(gtag_consent).forEach(function (key) {
-      gtag_consent[key] = 'danied';
-    });
-  }
-
-  _updateConsent(config);
-}
-
-function _updateConsent(config) {
-  var advanced_cookie_name = config.advanced_cookie_name,
-      expirationInDays = config.expirationInDays,
-      gtag_consent = config.gtag_consent;
-  (0,tiny_cookie__WEBPACK_IMPORTED_MODULE_0__.setCookie)(advanced_cookie_name, JSON.stringify(gtag_consent), {
-    expires: expirationInDays
-  });
-  gtag('consent', 'update', gtag_consent);
-  dataLayer.push({
-    'event': 'cookie_advanced_consent_updated'
-  });
-  dataLayer.push({
-    'event': 'gtm.init_consent'
-  });
-
-  _hide('cookiebar-banner');
-}
-
-function _addClickTo(selector, cb) {
-  var elements = document.querySelectorAll(selector);
-
-  if (elements.length <= 0) {
-    return;
-  }
-
-  elements.forEach(function (button) {
-    return button.addEventListener("click", cb);
-  });
-}
-
-function _hide(id) {
-  var el = document.getElementById(id);
-
-  if (!el) {
-    return;
-  }
-
-  el.style.display = "none";
-} // function _show(id) {
-//     const el = document.getElementById(id)
-//     if (! el ) {
-//         return;
-//     }
-//     el.style.display = "block";
-// }
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	__webpack_require__.O(undefined, ["resources/dist/cookie"], () => (__webpack_require__("./resources/js/cookie.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["resources/dist/cookie"], () => (__webpack_require__("./resources/css/cookie.css")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
+/******/ 	
 /******/ })()
 ;

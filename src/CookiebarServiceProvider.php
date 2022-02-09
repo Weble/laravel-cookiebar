@@ -21,7 +21,8 @@ class CookiebarServiceProvider extends PackageServiceProvider
             ->hasViewComposer('cookiebar::index', function (View $view) {
                 $cookiebarConfig = config('cookiebar');
                 $alreadyConsentedWithCookies = Cookie::has($cookiebarConfig['cookie_name']);
-                $view->with(compact('alreadyConsentedWithCookies', 'cookiebarConfig'));
+                $consentsJSON = $this->consentToJSON($cookiebarConfig['gtag_consent']);
+                $view->with(compact('alreadyConsentedWithCookies', 'cookiebarConfig', 'consentsJSON'));
             });
     }
 
@@ -30,5 +31,15 @@ class CookiebarServiceProvider extends PackageServiceProvider
         $this->app->resolving(EncryptCookies::class, function (EncryptCookies $encryptCookies) {
             $encryptCookies->disableFor(config('cookiebar.cookie_name'));
         });
+    }
+
+    protected function consentToJSON(array $consents)
+    {
+        return collect($consents)
+            ->skip(1)
+            ->mapWithKeys(function ($item, $key) {
+                return [$key => $item['value']];
+            })
+            ->toJson(JSON_PRETTY_PRINT);
     }
 }

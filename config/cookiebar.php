@@ -27,35 +27,41 @@ return [
      * Consents
      */
     'gtag_consent' => [
-        'ad_storage' => [
-            'label'         => 'ad_storage',
-            'value'         => 'denied',
-            'description'   => 'ad_storage',
+        'required' => [
+            'title'         => 'required',
+            'value'         => 'granted',
+            'description'   => 'required',
             'enabled'       => true,
         ],
+        'ad_storage' => [
+            'title'         => 'ad_storage',
+            'value'         => 'denied',
+            'description'   => 'ad_storage',
+            'enabled'       => false,
+        ],
         'analytics_storage' => [
-            'label'         => 'analytics_storage',
+            'title'         => 'analytics_storage',
             'value'         => 'denied',
             'description'   => 'analytics_storage',
             'enabled'       => true,
         ],
         'functional_storage' => [
-            'label'         => 'functional_storage',
+            'title'         => 'functional_storage',
             'value'         => 'denied',
             'description'   => 'functional_storage',
-            'enabled'       => true,
+            'enabled'       => false,
         ],
         'personalization_storage' => [
-            'label'         => 'personalization_storage',
+            'title'         => 'personalization_storage',
             'value'         => 'denied',
             'description'   => 'personalization_storage',
-            'enabled'       => true,
+            'enabled'       => false,
         ],
         'security_storage' => [
-            'label'         => 'security_storage',
+            'title'         => 'security_storage',
             'value'         => 'denied',
             'description'   => 'security_storage',
-            'enabled'       => true,
+            'enabled'       => false,
         ]
     ]
 ];
