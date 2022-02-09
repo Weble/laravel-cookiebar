@@ -13,29 +13,36 @@
                         {{ trans('cookiebar::modal.description') }}
                     </p>
                 </div>
-                <div class="cb-flex cb-flex-col cb-divide-y cb-px-10">
+                <div class="cb-flex cb-flex-col cb-divide-y cb-px-10 cd-divide-gray-300">
                     @foreach($cookiebarConfig['gtag_consent'] as $consent)
                         @if($consent['enabled'])
-                            <div class="cb-py-5 cb-flex cb-justify-between cb-items-center" data-cookiebar="toggle-description">
-                                <div class="cb-flex cb-items-center cb-space-x-3">
-                                    <h2>
-                                        {{ trans('cookiebar::consent.'.$consent['title'].'.title') }}
-                                    </h2>
-                                    <span class="cb-mt-1">
-                                        <svg class="cb-w-2" viewBox="0 0 14 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <g transform="translate(-738.000000, -2577.000000)">
-                                                    <polygon fill="currentColor" fill-rule="nonzero" points="744.999998 2584.39102 745.591279 2583.87604 752 2578.38285 750.817439 2577 744.999998 2581.98776 739.182561 2577 738 2578.38285 744.408718 2583.87604"></polygon>
-                                                </g>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </div>
-                                <div>
-                                    <div class="form-check">
-                                        <input type="checkbox" value="1" id="{{$consent['title']}}" @if($consent['title'] === 'required') checked disabled @endif
-                                            class="form-check-input cb-appearance-none cb-h-5 cb-w-5 cb-border cb-border-gray-300 cb-rounded-sm cb-bg-white checked:cb-bg-blue-600 checked:cb-border-blue-600 focus:cb-outline-none cb-transition cb-duration-200 cb-my-1 cb-align-top cb-bg-no-repeat cb-bg-center cb-bg-contain cb-float-left cb-cursor-pointer" >
+                            <div class="cb-py-5" >
+                                <div class="cb-flex cb-justify-between cb-items-center">
+                                    <div class="cb-flex cb-items-center cb-space-x-3 js-toggable-button">
+                                        <h2>
+                                            {{ trans('cookiebar::consent.'.$consent['title'].'.title') }}
+                                        </h2>
+{{--                                        <span class="cb-mt-1">--}}
+{{--                                            <svg class="cb-w-2" viewBox="0 0 14 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">--}}
+{{--                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">--}}
+{{--                                                    <g transform="translate(-738.000000, -2577.000000)">--}}
+{{--                                                        <polygon fill="currentColor" fill-rule="nonzero" points="744.999998 2584.39102 745.591279 2583.87604 752 2578.38285 750.817439 2577 744.999998 2581.98776 739.182561 2577 738 2578.38285 744.408718 2583.87604"></polygon>--}}
+{{--                                                    </g>--}}
+{{--                                                </g>--}}
+{{--                                            </svg>--}}
+{{--                                        </span>--}}
                                     </div>
+                                    <div>
+                                        <div class="form-check">
+                                            <input type="checkbox" value="1" id="{{$consent['title']}}" @if($consent['title'] === 'required') checked disabled @endif
+                                                class="form-check-input cb-appearance-none cb-h-5 cb-w-5 cb-border cb-border-gray-300 cb-rounded-sm cb-bg-white checked:cb-bg-blue-600 checked:cb-border-blue-600 focus:cb-outline-none cb-transition cb-duration-200 cb-my-1 cb-align-top cb-bg-no-repeat cb-bg-center cb-bg-contain cb-float-left cb-cursor-pointer" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cb-text-sm cb-text-gray-500" >
+                                    <p class="cb-pr-14 cb-pt-2">
+                                        {{ trans('cookiebar::consent.'.$consent['title'].'.description') }}
+                                    </p>
                                 </div>
                             </div>
                         @endif

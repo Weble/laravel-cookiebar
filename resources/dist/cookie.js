@@ -73,11 +73,6 @@ function setupTemplate() {
 
   _addClickTo('[data-cookiebar="modal-hide"]', function () {
     return _hide(document.getElementById('cookiebar-modal'));
-  }); // toggle description
-
-
-  _addClickTo('[data-cookiebar="toggle-description"]', function (event) {
-    return _toggle(event.target);
   });
 
   return this;
@@ -164,16 +159,12 @@ function _show(el) {
   el.style.display = "block";
 }
 
-function _toggle(el) {
-  console.log(el);
-
-  if (window.getComputedStyle(el).display === 'block') {
-    _hide(el);
-
-    return;
-  }
-
-  _show(el);
+function _toggable(el) {
+  console.log(el); // if (window.getComputedStyle(el).display === 'block') {
+  //     _hide(el);
+  //     return;
+  // }
+  // _show(el);
 }
 
 /***/ }),
