@@ -52,8 +52,8 @@
                     <button type="button" class="cb-px-6 cb-py-2 hover:underline" data-cookiebar="modal-hide">
                         {{ trans('cookiebar::modal.cancel') }}
                     </button>
-                    <button
-                        class="cb-px-6 cb-py-2 cb-bg-blue-600 cb-text-white cb-rounded hover:cb-bg-blue-700">
+                    <button type="button" data-cookiebar="update-consent"
+                        class="cb-px-6 cb-py-2 cb-bg-blue-600 cb-text-white cb-rounded hover:cb-bg-blue-700 js-cookiebar-custom">
                         {{ trans('cookiebar::modal.save') }}
                     </button>
                 </div>

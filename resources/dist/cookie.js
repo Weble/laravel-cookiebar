@@ -32,6 +32,7 @@ function configure(config) {
 
 
 function init() {
+  // initialize GTM
   window.dataLayer = window.dataLayer || [];
 
   if (typeof gtag === 'undefined') {
@@ -42,14 +43,15 @@ function init() {
     window.gtag = window.gtag || _gtag;
   }
 
-  var value = JSON.parse((0,tiny_cookie__WEBPACK_IMPORTED_MODULE_0__.getCookie)(this.config.advanced_cookie_name));
+  var cookie = JSON.parse((0,tiny_cookie__WEBPACK_IMPORTED_MODULE_0__.getCookie)(this.config.advanced_cookie_name)); // default consent
 
-  if (!value) {
+  if (!cookie) {
     gtag('consent', 'default', this.config.gtag_consent);
     return this;
-  }
+  } // update consent
 
-  Object.assign(this.config.gtag_consent, value);
+
+  Object.assign(this.config.gtag_consent, cookie);
 
   _updateConsent(this.config);
 
@@ -67,7 +69,7 @@ function setupTemplate() {
 
 
   _addClickTo('[data-cookiebar="modal-show"]', function () {
-    return _show(document.getElementById('cookiebar-modal'));
+    return _showModal(_this.config.gtag_consent);
   }); // hide modal
 
 
@@ -118,6 +120,24 @@ function _updateConsentEvent(event, config) {
     });
   }
 
+  if ((0,_helper__WEBPACK_IMPORTED_MODULE_1__.hasClass)(target, 'js-cookiebar-custom')) {
+    Object.keys(gtag_consent).forEach(function (key) {
+      var checkbox = document.getElementById(key);
+
+      if (!checkbox) {
+        return;
+      }
+
+      if (checkbox.checked) {
+        gtag_consent[key] = 'granted';
+      }
+
+      if (!checkbox.checked) {
+        gtag_consent[key] = 'denied';
+      }
+    });
+  }
+
   _updateConsent(config);
 }
 
@@ -136,7 +156,9 @@ function _updateConsent(config) {
     'event': 'gtm.init_consent'
   });
 
-  _hide('cookiebar-banner');
+  _hide(document.getElementById('cookiebar-banner'));
+
+  _hide(document.getElementById('cookiebar-modal'));
 }
 
 function _addClickTo(selector, cb) {
@@ -152,19 +174,34 @@ function _addClickTo(selector, cb) {
 }
 
 function _hide(el) {
+  if (!el) {
+    return;
+  }
+
   el.style.display = "none";
 }
 
 function _show(el) {
+  if (!el) {
+    return;
+  }
+
   el.style.display = "block";
 }
 
-function _toggable(el) {
-  console.log(el); // if (window.getComputedStyle(el).display === 'block') {
-  //     _hide(el);
-  //     return;
-  // }
-  // _show(el);
+function _showModal(consents) {
+  // check consent
+  Object.keys(consents).forEach(function (key) {
+    var checkbox = document.getElementById(key);
+
+    if (!checkbox) {
+      return;
+    }
+
+    checkbox.checked = consents[key] === 'granted';
+  });
+
+  _show(document.getElementById('cookiebar-modal'));
 }
 
 /***/ }),

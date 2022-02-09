@@ -17,6 +17,7 @@ function configure(config) {
 
 // 2
 function init() {
+    // initialize GTM
     window.dataLayer = window.dataLayer || [];
     if (typeof gtag === 'undefined') {
         function gtag() {
@@ -25,15 +26,18 @@ function init() {
         window.gtag = window.gtag || gtag;
     }
 
-    const value = JSON.parse(getCookie(this.config.advanced_cookie_name));
+    const cookie = JSON.parse(getCookie(this.config.advanced_cookie_name));
 
-    if (! value) {
+    // default consent
+    if (! cookie) {
         gtag('consent', 'default', this.config.gtag_consent);
         return this;
     }
 
-    Object.assign(this.config.gtag_consent, value);
+    // update consent
+    Object.assign(this.config.gtag_consent, cookie);
     _updateConsent(this.config);
+
     return this;
 }
 
@@ -43,7 +47,7 @@ function setupTemplate() {
     _addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
 
     // show modal
-    _addClickTo('[data-cookiebar="modal-show"]', () => _show(document.getElementById('cookiebar-modal')));
+    _addClickTo('[data-cookiebar="modal-show"]', () => _showModal(this.config.gtag_consent));
 
     // hide modal
     _addClickTo('[data-cookiebar="modal-hide"]', () => _hide(document.getElementById('cookiebar-modal')));
@@ -76,16 +80,40 @@ function _updateConsentEvent(event, config) {
 
     // AGREE: all consents granted
     if (hasClass(target, 'js-cookiebar-agree')) {
-        Object.keys(gtag_consent).forEach(function (key){
-            gtag_consent[key] = 'granted'
-        });
+        Object
+            .keys(gtag_consent)
+            .forEach(function (key){
+                gtag_consent[key] = 'granted'
+            });
     }
 
     // DISMISS: all consents denied
     if (hasClass(target, 'js-cookiebar-dismiss')) {
-        Object.keys(gtag_consent).forEach(function (key){
-            gtag_consent[key] = 'danied'
-        });
+        Object
+            .keys(gtag_consent)
+            .forEach(function (key){
+                gtag_consent[key] = 'danied'
+            });
+    }
+
+    if (hasClass(target, 'js-cookiebar-custom')) {
+        Object
+            .keys(gtag_consent)
+            .forEach((key) => {
+                const checkbox = document.getElementById(key);
+
+                if (! checkbox) {
+                    return;
+                }
+
+                if (checkbox.checked) {
+                    gtag_consent[key] = 'granted';
+                }
+
+                if (! checkbox.checked) {
+                    gtag_consent[key] = 'denied';
+                }
+            });
     }
 
     _updateConsent(config);
@@ -106,7 +134,8 @@ function _updateConsent(config) {
         'event': 'gtm.init_consent'
     });
 
-    _hide('cookiebar-banner')
+    _hide(document.getElementById('cookiebar-banner'))
+    _hide(document.getElementById('cookiebar-modal'))
 }
 
 function _addClickTo(selector, cb) {
@@ -119,19 +148,32 @@ function _addClickTo(selector, cb) {
 }
 
 function _hide(el) {
+    if (! el) {
+        return;
+    }
     el.style.display = "none";
 }
 
 function _show(el) {
+    if (! el) {
+        return;
+    }
     el.style.display = "block";
 }
 
-function _toggable(el) {
-    console.log(el)
+function _showModal(consents) {
+    // check consent
+    Object
+        .keys(consents)
+        .forEach((key) => {
+            const checkbox = document.getElementById(key);
 
-    // if (window.getComputedStyle(el).display === 'block') {
-    //     _hide(el);
-    //     return;
-    // }
-    // _show(el);
+            if (! checkbox) {
+                return;
+            }
+
+            checkbox.checked = consents[key] === 'granted'
+        });
+
+    _show(document.getElementById('cookiebar-modal'))
 }
