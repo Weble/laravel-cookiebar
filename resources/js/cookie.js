@@ -43,10 +43,13 @@ function setupTemplate() {
     _addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
 
     // show modal
-    _addClickTo('[data-cookiebar="modal-show"]', () => _show('cookiebar-modal'));
+    _addClickTo('[data-cookiebar="modal-show"]', () => _show(document.getElementById('cookiebar-modal')));
 
     // hide modal
-    _addClickTo('[data-cookiebar="modal-hide"]', (event) => _hide('cookiebar-modal'));
+    _addClickTo('[data-cookiebar="modal-hide"]', () => _hide(document.getElementById('cookiebar-modal')));
+
+    // toggle description
+    _addClickTo('[data-cookiebar="toggle-description"]', (event) => _toggle(event.target));
 
     return this;
 }
@@ -118,18 +121,20 @@ function _addClickTo(selector, cb) {
     elements.forEach((button) => button.addEventListener("click", cb))
 }
 
-function _hide(id) {
-    const el = document.getElementById(id)
-    if (! el ) {
-        return;
-    }
+function _hide(el) {
     el.style.display = "none";
 }
 
-function _show(id) {
-    const el = document.getElementById(id)
-    if (! el ) {
+function _show(el) {
+    el.style.display = "block";
+}
+
+function _toggle(el) {
+    console.log(el)
+
+    if (window.getComputedStyle(el).display === 'block') {
+        _hide(el);
         return;
     }
-    el.style.display = "block";
+    _show(el);
 }

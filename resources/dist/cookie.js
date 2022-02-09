@@ -67,12 +67,17 @@ function setupTemplate() {
 
 
   _addClickTo('[data-cookiebar="modal-show"]', function () {
-    return _show('cookiebar-modal');
+    return _show(document.getElementById('cookiebar-modal'));
   }); // hide modal
 
 
-  _addClickTo('[data-cookiebar="modal-hide"]', function (event) {
-    return _hide('cookiebar-modal');
+  _addClickTo('[data-cookiebar="modal-hide"]', function () {
+    return _hide(document.getElementById('cookiebar-modal'));
+  }); // toggle description
+
+
+  _addClickTo('[data-cookiebar="toggle-description"]', function (event) {
+    return _toggle(event.target);
   });
 
   return this;
@@ -151,24 +156,24 @@ function _addClickTo(selector, cb) {
   });
 }
 
-function _hide(id) {
-  var el = document.getElementById(id);
-
-  if (!el) {
-    return;
-  }
-
+function _hide(el) {
   el.style.display = "none";
 }
 
-function _show(id) {
-  var el = document.getElementById(id);
+function _show(el) {
+  el.style.display = "block";
+}
 
-  if (!el) {
+function _toggle(el) {
+  console.log(el);
+
+  if (window.getComputedStyle(el).display === 'block') {
+    _hide(el);
+
     return;
   }
 
-  el.style.display = "block";
+  _show(el);
 }
 
 /***/ }),

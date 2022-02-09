@@ -16,7 +16,7 @@
                 <div class="cb-flex cb-flex-col cb-divide-y cb-px-10">
                     @foreach($cookiebarConfig['gtag_consent'] as $consent)
                         @if($consent['enabled'])
-                            <div class="cb-py-5 cb-flex cb-justify-between cb-items-center">
+                            <div class="cb-py-5 cb-flex cb-justify-between cb-items-center" data-cookiebar="toggle-description">
                                 <div class="cb-flex cb-items-center cb-space-x-3">
                                     <h2>
                                         {{ trans('cookiebar::consent.'.$consent['title'].'.title') }}
