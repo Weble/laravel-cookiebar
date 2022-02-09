@@ -1,4 +1,5 @@
 <script src="/vendor/cookiebar/cookie.js" defer="defer" ></script>
+<link rel="stylesheet" href="/vendor/cookiebar/cookie.css">
 <script>
     window.addEventListener('load', (event) => {
         cookiebar

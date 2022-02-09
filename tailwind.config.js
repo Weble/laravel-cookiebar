@@ -1,6 +1,8 @@
 module.exports = {
-    content: ["./src/**/*.{php,js}"],
+    content: ['./resources/views/**/*.blade.php'],
+    prefix: 'cb-',
     theme: {
+        color: {},
         extend: {},
     },
     plugins: [],
