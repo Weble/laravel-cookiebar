@@ -67,12 +67,12 @@ function setupTemplate() {
 
 
   _addClickTo('[data-cookiebar="modal-show"]', function () {
-    return console.log('modal-show');
+    return _show('cookiebar-modal');
   }); // hide modal
 
 
-  _addClickTo('[data-cookiebar="modal-hide"]', function () {
-    return console.log('modal-hide');
+  _addClickTo('[data-cookiebar="modal-hide"]', function (event) {
+    return _hide('cookiebar-modal');
   });
 
   return this;
@@ -159,13 +159,17 @@ function _hide(id) {
   }
 
   el.style.display = "none";
-} // function _show(id) {
-//     const el = document.getElementById(id)
-//     if (! el ) {
-//         return;
-//     }
-//     el.style.display = "block";
-// }
+}
+
+function _show(id) {
+  var el = document.getElementById(id);
+
+  if (!el) {
+    return;
+  }
+
+  el.style.display = "block";
+}
 
 /***/ }),
 

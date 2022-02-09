@@ -43,10 +43,10 @@ function setupTemplate() {
     _addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
 
     // show modal
-    _addClickTo('[data-cookiebar="modal-show"]', () => console.log('modal-show'));
+    _addClickTo('[data-cookiebar="modal-show"]', () => _show('cookiebar-modal'));
 
     // hide modal
-    _addClickTo('[data-cookiebar="modal-hide"]', () => console.log('modal-hide'));
+    _addClickTo('[data-cookiebar="modal-hide"]', (event) => _hide('cookiebar-modal'));
 
     return this;
 }
@@ -126,10 +126,10 @@ function _hide(id) {
     el.style.display = "none";
 }
 
-// function _show(id) {
-//     const el = document.getElementById(id)
-//     if (! el ) {
-//         return;
-//     }
-//     el.style.display = "block";
-// }
+function _show(id) {
+    const el = document.getElementById(id)
+    if (! el ) {
+        return;
+    }
+    el.style.display = "block";
+}

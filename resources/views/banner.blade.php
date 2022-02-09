@@ -8,7 +8,7 @@
 
         <div class="flex flex-col items-center justify-center space-y-4">
             <div class="flex justify-center items-center space-x-4">
-                <button data-cookiebar="banner-manage"
+                <button data-cookiebar="modal-show"
                     class="ml-8 bg-white bg-opacity-0 text-white border border-white hover:bg-opacity-25 font-bold text-sm uppercase px-3 py-2 lg:px-4 lg:py-2 rounded-full flex flex-row items-center justify-center js-cookiebar-manage">
                     {{ trans('cookiebar::banner.manage') }}
                 </button>
