@@ -1,4 +1,4 @@
-# Laravel cookie consent dialog
+# Laravel Cookiebar integrata con GTM
 
 ## Installazione
 
