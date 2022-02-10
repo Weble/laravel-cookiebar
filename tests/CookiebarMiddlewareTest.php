@@ -38,7 +38,8 @@ class CookiebarMiddlewareTest extends TestCase
         $middleware = new CookiebarMiddleware();
 
         $result = $middleware->handle($request, function ($request) {
-            return  (new Response())->setContent('<html></html>');;
+            return  (new Response())->setContent('<html></html>');
+            ;
         });
 
         $content = $result->getContent();

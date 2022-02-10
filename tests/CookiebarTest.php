@@ -47,8 +47,8 @@ class CookiebarTest extends TestCase
         $html = view('dialog')
             ->with([
                 'cookiebarConfig' => [
-                    'gtag_consent' => []
-                ]
+                    'gtag_consent' => [],
+                ],
             ])
             ->render();
 
