@@ -38,97 +38,11 @@ class CookiebarMiddlewareTest extends TestCase
         $middleware = new CookiebarMiddleware();
 
         $result = $middleware->handle($request, function ($request) {
-            return (new Response())->setContent('<html></html>');
+            return  (new Response())->setContent('<html></html>');;
         });
 
         $content = $result->getContent();
 
         $this->assertEquals('<html></html>', $content);
     }
-
-//    /** @test */
-//    public function it_does_not_use_a_secure_cookie_if_session_secure_is_false()
-//    {
-//        config(['session.secure' => false]);
-//
-//        $middleware = new CookiebarMiddleware();
-//
-//        $result = $middleware->handle(new Request(), function () {
-//            return (new Response())->setContent('<html><head></head><body></body></html>');
-//        });
-//
-//        $this->assertStringContainsString(';path=/\'', $result->getContent());
-//        $this->assertStringNotContainsString(';path=/;secure\'', $result->getContent());
-//    }
-//
-//    /** @test */
-//    public function it_uses_a_secure_cookie_if_config_session_is_set_to_secure()
-//    {
-//        config(['session.secure' => true]);
-//
-//        $middleware = new CookiebarMiddleware();
-//
-//        $result = $middleware->handle(new Request(), function () {
-//            return (new Response())->setContent('<html><head></head><body></body></html>');
-//        });
-//
-//        $this->assertStringNotContainsString(';path=/\'', $result->getContent());
-//        $this->assertStringContainsString(';path=/;secure\'', $result->getContent());
-//    }
-//
-//    /** @test */
-//    public function the_cookie_domain_is_set_by_the_session_domain_config_variable()
-//    {
-//        config(['session.domain' => 'some domain']);
-//
-//        $middleware = new CookiebarMiddleware();
-//
-//        $result = $middleware->handle(new Request(), function () {
-//            return (new Response())->setContent('<html><head></head><body></body></html>');
-//        });
-//
-//        $this->assertStringContainsString('const COOKIE_DOMAIN = \'some domain\'', $result->getContent());
-//    }
-//
-//    /** @test */
-//    public function the_cookie_samesite_attribute_is_not_set_if_config_session_is_set_to_false()
-//    {
-//        config(['session.same_site' => null]);
-//
-//        $middleware = new CookiebarMiddleware();
-//
-//        $result = $middleware->handle(new Request(), function () {
-//            return (new Response())->setContent('<html><head></head><body></body></html>');
-//        });
-//
-//        $this->assertStringNotContainsString(';samesite=', $result->getContent());
-//    }
-//
-//    /** @test */
-//    public function the_cookie_samesite_attribute_is_by_the_session_samesite_config_variable()
-//    {
-//        config(['session.same_site' => 'strict']);
-//
-//        $middleware = new CookiebarMiddleware();
-//
-//        $result = $middleware->handle(new Request(), function () {
-//            return (new Response())->setContent('<html><head></head><body></body></html>');
-//        });
-//
-//        $this->assertStringContainsString(';samesite=strict', $result->getContent());
-//    }
-//
-//    /** @test */
-//    public function it_uses_the_request_host_unless_session_domain_is_set()
-//    {
-//        config(['session.domain' => null]);
-//
-//        $middleware = new CookiebarMiddleware();
-//
-//        $result = $middleware->handle(new Request(), function () {
-//            return (new Response())->setContent('<html><head></head><body></body></html>');
-//        });
-//
-//        $this->assertStringContainsString('const COOKIE_DOMAIN = \'localhost\'', $result->getContent());
-//    }
 }

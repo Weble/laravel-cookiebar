@@ -28,7 +28,7 @@ class CookiebarMiddleware
 
     protected function containsBodyTag(Response $response): bool
     {
-        return $this->getLastClosingBodyTagPosition($response->getContent()) !== false;
+        return $this->getLastClosingBodyTagPosition($response->getContent()) > 0;
     }
 
     protected function addCookieConsentScriptToResponse(Response $response): Response
