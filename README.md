@@ -12,16 +12,22 @@ composer require weble/laravel-cookiebar
 php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider" --tag="cookiebar-config"
 ```
 
+### Assets
+
+```shell
+php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider" --tag="cookiebar-assets"
+```
+
 ### Views
 
 ```shell
-php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider" --tag="cookiebar-view"
+php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider" --tag="cookiebar-views"
 ```
 
 ### Traduzioni
 
 ```shell
-php artisan vendor:publish --provider="Spatie\CookieConsent\CookieConsentServiceProvider" --tag="cookiebar-translations"
+php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider" --tag="cookiebar-translations"
 ```
 
 ## Utilizzo
