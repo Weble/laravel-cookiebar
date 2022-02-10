@@ -1,25 +1,25 @@
 <div id="cookiebar-banner"
-    class="fixed bottom-0 w-full py-4 text-white bg-black shadow-top js-cookiebar cookiebar z-50">
-    <div class="container mx-auto flex flex-col items-center justify-center text-center lg:text-left space-y-4">
+    class="cb-fixed cb-bottom-0 cb-w-full cb-py-4 cb-text-white cb-bg-black cb-shadow-top js-cookiebar cookiebar cb-z-50">
+    <div class="cb-container cb-mx-auto cb-flex cb-flex-col cb-items-center cb-justify-center cb-text-center lg:cb-text-left cb-space-y-4">
 
         <span class="cookiebar__message">
             {!! trans('cookiebar::banner.message') !!}
         </span>
 
-        <div class="flex flex-col items-center justify-center space-y-4">
-            <div class="flex justify-center items-center space-x-4">
+        <div class="cb-flex cb-flex-col cb-items-center cb-justify-center cb-space-y-4">
+            <div class="cb-flex cb-justify-center cb-items-center cb-space-x-4">
                 <button data-cookiebar="modal-show"
-                    class="ml-8 bg-white bg-opacity-0 text-white border border-white hover:bg-opacity-25 font-bold text-sm uppercase px-3 py-2 lg:px-4 lg:py-2 rounded-full flex flex-row items-center justify-center js-cookiebar-manage">
+                    class="cb-ml-8 cb-bg-white cb-bg-opacity-0 cb-text-white cb-border cb-border-white hover:cb-bg-opacity-25 cb-font-bold cb-text-sm cb-uppercase cb-px-3 cb-py-2 lg:cb-px-4 lg:cb-py-2 cb-rounded-full cb-flex cb-flex-row cb-items-center cb-justify-center js-cookiebar-manage">
                     {{ trans('cookiebar::banner.manage') }}
                 </button>
                 <button data-cookiebar="update-consent"
-                    class="ml-8 bg-white bg-opacity-100 hover:bg-black text-black hover:text-white border border-black hover:border-white font-bold text-sm uppercase px-3 py-2 lg:px-4 lg:py-2 rounded-full flex flex-row items-center justify-center js-cookiebar-agree">
+                    class="cb-ml-8 cb-bg-white cb-bg-opacity-100 hover:cb-bg-black cb-text-black hover:cb-text-white cb-border cb-border-black hover:cb-border-white cb-font-bold cb-text-sm cb-uppercase cb-px-3 cb-py-2 lg:cb-px-4 lg:cb-py-2 cb-rounded-full cb-flex cb-flex-row cb-items-center cb-justify-center js-cookiebar-agree">
                     {{ trans('cookiebar::banner.agree') }}
                 </button>
             </div>
 
             <button data-cookiebar="update-consent"
-                class="mt-2 ml-8 underline text-xs js-cookiebar-dismiss">
+                class="cb-mt-2 cb-ml-8 cb-underline cb-text-xs js-cookiebar-dismiss">
                 {{ trans('cookiebar::banner.dismiss') }}
             </button>
         </div>
