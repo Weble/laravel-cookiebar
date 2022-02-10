@@ -1,1 +1,2 @@
-@include('cookiebar::dialogContents')
+@include('cookiebar::banner')
+@include('cookiebar::modal')

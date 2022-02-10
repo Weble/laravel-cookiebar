@@ -7,8 +7,10 @@ class CookiebarTest extends TestCase
     /** @test */
     public function it_provides_translations()
     {
-        $this->assertTranslationExists('cookiebar::texts.message');
-        $this->assertTranslationExists('cookiebar::texts.agree');
+        $this->assertTranslationExists('cookiebar::banner.message');
+        $this->assertTranslationExists('cookiebar::banner.agree');
+        $this->assertTranslationExists('cookiebar::banner.dismiss');
+        $this->assertTranslationExists('cookiebar::banner.manage');
     }
 
     /** @test */
@@ -42,9 +44,21 @@ class CookiebarTest extends TestCase
     /** @test */
     public function it_contains_the_necessary_css_classes_for_javascript_functionality()
     {
-        $html = view('dialog')->render();
+        $html = view('dialog')
+            ->with([
+                'cookiebarConfig' => [
+                    'gtag_consent' => []
+                ]
+            ])
+            ->render();
 
         $this->assertStringContainsString('js-cookiebar', $html);
         $this->assertStringContainsString('js-cookiebar-agree', $html);
+        $this->assertStringContainsString('js-cookiebar-dismiss', $html);
+        $this->assertStringContainsString('js-cookiebar-manage', $html);
+        $this->assertStringContainsString('js-cookiebar-custom', $html);
+        $this->assertStringContainsString('data-cookiebar="update-consent"', $html);
+        $this->assertStringContainsString('data-cookiebar="modal-show"', $html);
+        $this->assertStringContainsString('data-cookiebar="modal-hide"', $html);
     }
 }
