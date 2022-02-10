@@ -46,4 +46,4 @@ Viene aggiunto prima della chiusura del body ```cookiebar::index```
 
 ### Personalizzare UI
 
-Modificare le views pubblicate ```public/vendor/view/banner.blade.php```, ```public/vendor/view/modal.blade.php``` con classi o stili.
+Modificare le views pubblicate ```resources/view/vendor/cookiebar/banner.blade.php```, ```resources/view/vendor/cookiebar/modal.blade.php``` con classi o stili.
