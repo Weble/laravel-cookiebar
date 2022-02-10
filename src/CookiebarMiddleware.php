@@ -45,7 +45,7 @@ class CookiebarMiddleware
         return $response->setContent($content);
     }
 
-    protected function getLastClosingBodyTagPosition(string $content = ''): bool | int
+    protected function getLastClosingBodyTagPosition(string $content = ''): ?int
     {
         return strripos($content, '</body>');
     }
