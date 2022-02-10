@@ -1,13 +1,16 @@
-# Laravel Cookiebar integrata con GTM
+# Laravel Cookies Consent Management with GTM ConsentMode
 
-## Installazione
+Laravel package for the new EU Cookie LAW. Provides a nice toolbar with a modal to select which consent
+
+## Installation
 
 ```shell
 composer require weble/laravel-cookiebar
 ```
 
-### Config
+## Publish Assets
 
+### Config
 ```shell
 php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider" --tag="cookiebar-config"
 ```
@@ -24,34 +27,18 @@ php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider"
 php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider" --tag="cookiebar-views"
 ```
 
-### Traduzioni
+### Translations
 
 ```shell
 php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider" --tag="cookiebar-translations"
 ```
 
-## Utilizzo
+## Usage
 
-- Aggiunger Weble\Cookiebar\CookiebarMiddleware nel kernel:
+Add `Weble\Cookiebar\CookiebarMiddleware` in the `App\Http\Kernel`, to the route group you want to have the cookiebar. Usually it's the `web` group, or the general middleware list.
 
-    ```php
-    // app/Http/Kernel.php
-    
-    class Kernel extends HttpKernel
-    {
-        protected $middleware = [
-        // ...
-            \Weble\Cookiebar\CookiebarMiddleware::class,
-        ];
-    
-        // ...
-    }
-    ```
-    Viene aggiunto prima della chiusura del body ```cookiebar::index```
+Set `GTM_CODE` variable to your `.env` file with your Google Tag Manager code.
 
+## Customizations
 
-- Aggiungere ```GTM_CODE=``` nell'.env
-
-### Personalizzare UI
-
-Modificare le views pubblicate in ```resources/view/vendor/cookiebar/banner.blade.php```, ```resources/view/vendor/cookiebar/modal.blade.php```
+You can publish the views, assets and translations, and then edit the files in `resources/view/vendor/cookiebar/banner.blade.php` and `resources/view/vendor/cookiebar/modal.blade.php`
