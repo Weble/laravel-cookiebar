@@ -26,24 +26,26 @@ php artisan vendor:publish --provider="Spatie\CookieConsent\CookieConsentService
 
 ## Utilizzo
 
-Aggiunger Weble\Cookiebar\CookiebarMiddleware nel kernel:
+- Aggiunger Weble\Cookiebar\CookiebarMiddleware nel kernel:
 
-```php
-// app/Http/Kernel.php
+    ```php
+    // app/Http/Kernel.php
+    
+    class Kernel extends HttpKernel
+    {
+        protected $middleware = [
+        // ...
+            \Weble\Cookiebar\CookiebarMiddleware::class,
+        ];
+    
+        // ...
+    }
+    ```
+    Viene aggiunto prima della chiusura del body ```cookiebar::index```
 
-class Kernel extends HttpKernel
-{
-    protected $middleware = [
-    // ...
-        \Weble\Cookiebar\CookiebarMiddleware::class,
-    ];
 
-    // ...
-}
-```
-
-Viene aggiunto prima della chiusura del body ```cookiebar::index```
+- Aggiungere ```GTM_CODE=``` nell'.env
 
 ### Personalizzare UI
 
-Modificare le views pubblicate ```resources/view/vendor/cookiebar/banner.blade.php```, ```resources/view/vendor/cookiebar/modal.blade.php``` con classi o stili.
+Modificare le views pubblicate in ```resources/view/vendor/cookiebar/banner.blade.php```, ```resources/view/vendor/cookiebar/modal.blade.php```
