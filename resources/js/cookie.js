@@ -1,12 +1,11 @@
 import { getCookie, setCookie } from 'tiny-cookie';
 import { hasClass, hide, show , addClickTo } from './helper'
 
-window.cookiebar = (() => ({
+window.gtmCookieBar = (() => ({
     config: {},
     configure: configure,
     init: init,
     setupTemplate: setupTemplate,
-    loadGTM: loadGTM,
 }))();
 
 // 1
@@ -17,7 +16,7 @@ function configure(config) {
 
 // 2
 function init() {
-    // initialize GTM
+    // initialize GTM Data Layer
     window.dataLayer = window.dataLayer || [];
     if (typeof gtag === 'undefined') {
         function gtag() {
@@ -26,17 +25,19 @@ function init() {
         window.gtag = window.gtag || gtag;
     }
 
-    const cookie = JSON.parse(getCookie(this.config.advanced_cookie_name));
+    const cookie = JSON.parse(getCookie(this.config.cookieName));
 
     // default consent
     if (! cookie) {
-        gtag('consent', 'default', this.config.gtag_consent);
+        //gtag('consent', 'default', this.config.gtag_consent);
         return this;
     }
+/*
 
     // update consent
     Object.assign(this.config.gtag_consent, cookie);
     _updateConsent(this.config);
+*/
 
     return this;
 }
@@ -54,24 +55,6 @@ function setupTemplate() {
 
     return this;
 }
-
-// 4
-function loadGTM() {
-    if (! this.config.gtm_code) {
-        return;
-    }
-
-    (function (w, d, s, l, i) {
-        w[l] = w[l] || [];w[l].push({'gtm.start':
-                new Date().getTime(), event: 'gtm.js'});const f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';j.async = true;j.src =
-            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', this.config.gtm_code);
-
-    return this;
-}
-
-
 
 function _updateConsentEvent(event, config) {
     const target = event.target;
@@ -120,9 +103,9 @@ function _updateConsentEvent(event, config) {
 }
 
 function _updateConsent(config) {
-    const {advanced_cookie_name, expirationInDays, gtag_consent} = config;
+    const {cookieName, expirationInDays, gtag_consent} = config;
 
-    setCookie(advanced_cookie_name, JSON.stringify( gtag_consent), { expires: expirationInDays });
+    setCookie(cookieName, JSON.stringify( gtag_consent), { expires: expirationInDays });
 
     gtag('consent', 'update', gtag_consent);
 
