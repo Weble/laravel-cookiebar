@@ -1,9 +1,8 @@
-@if($cookiebarConfig['enabled'])
-    @include('cookiebar::script')
+@if(config('cookiebar.enabled'))
+    @if (!$hasAlreadyConsented)
+        @include('cookiebar::banner')
+    @endif
 
-@endif
-
-@if($cookiebarConfig['enabled'] && ! $alreadyConsentedWithCookies)
-    @include('cookiebar::banner')
     @include('cookiebar::modal')
+    @include('cookiebar::scripts')
 @endif

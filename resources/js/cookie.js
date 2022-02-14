@@ -1,12 +1,18 @@
 import { getCookie, setCookie } from 'tiny-cookie';
 import { hasClass, hide, show , addClickTo } from './helper'
 
-window.cookiebar = (() => ({
-    config: {},
+window.gtmCookieBar = (() => ({
+    config: {
+        cookieName: '_cookieAdvancedAllowed',
+        expirationInDays: 365,
+        gtag_consent: {
+
+        }
+    },
     configure: configure,
     init: init,
     setupTemplate: setupTemplate,
-    loadGTM: loadGTM,
+    editConsents: _showModal
 }))();
 
 // 1
@@ -17,7 +23,7 @@ function configure(config) {
 
 // 2
 function init() {
-    // initialize GTM
+    // initialize GTM Data Layer
     window.dataLayer = window.dataLayer || [];
     if (typeof gtag === 'undefined') {
         function gtag() {
@@ -26,17 +32,19 @@ function init() {
         window.gtag = window.gtag || gtag;
     }
 
-    const cookie = JSON.parse(getCookie(this.config.advanced_cookie_name));
+    const cookie = JSON.parse(getCookie(this.config.cookieName));
 
     // default consent
     if (! cookie) {
-        gtag('consent', 'default', this.config.gtag_consent);
+        //gtag('consent', 'default', this.config.gtag_consent);
         return this;
     }
 
+
     // update consent
     Object.assign(this.config.gtag_consent, cookie);
-    _updateConsent(this.config);
+    //_updateConsent(this.config);
+
 
     return this;
 }
@@ -47,31 +55,13 @@ function setupTemplate() {
     addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
 
     // show modal
-    addClickTo('[data-cookiebar="modal-show"]', () => _showModal(this.config.gtag_consent));
+    addClickTo('[data-cookiebar="modal-show"]', () => _showModal());
 
     // hide modal
     addClickTo('[data-cookiebar="modal-hide"]', () => hide(document.getElementById('cookiebar-modal')));
 
     return this;
 }
-
-// 4
-function loadGTM() {
-    if (! this.config.gtm_code) {
-        return;
-    }
-
-    (function (w, d, s, l, i) {
-        w[l] = w[l] || [];w[l].push({'gtm.start':
-                new Date().getTime(), event: 'gtm.js'});const f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';j.async = true;j.src =
-            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', this.config.gtm_code);
-
-    return this;
-}
-
-
 
 function _updateConsentEvent(event, config) {
     const target = event.target;
@@ -120,9 +110,9 @@ function _updateConsentEvent(event, config) {
 }
 
 function _updateConsent(config) {
-    const {advanced_cookie_name, expirationInDays, gtag_consent} = config;
+    const {cookieName, expirationInDays, gtag_consent} = config;
 
-    setCookie(advanced_cookie_name, JSON.stringify( gtag_consent), { expires: expirationInDays });
+    setCookie(cookieName, JSON.stringify( gtag_consent), { expires: expirationInDays });
 
     gtag('consent', 'update', gtag_consent);
 
@@ -138,7 +128,9 @@ function _updateConsent(config) {
     hide(document.getElementById('cookiebar-modal'))
 }
 
-function _showModal(consents) {
+function _showModal() {
+    const consents = this.config.gtag_consent;
+
     // check consent
     Object
         .keys(consents)

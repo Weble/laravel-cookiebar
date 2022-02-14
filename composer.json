@@ -18,14 +18,21 @@
             "email": "enea@weble.it",
             "homepage": "https://weble.it",
             "role": "Developer"
+        },
+        {
+            "name": "Daniele Rosario",
+            "email": "daniele@weble.it",
+            "homepage": "https://weble.it",
+            "role": "CTO"
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
-        "illuminate/support": "^7.0|^8.0|^9.0",
-        "illuminate/view": "^7.0|^8.0|^9.0",
-        "illuminate/cookie": "^7.0|^8.0|^9.0",
-        "spatie/laravel-package-tools": "^1.9"
+        "php": "^8.0",
+        "illuminate/support": "^8.0|^9.0",
+        "illuminate/view": "^8.0|^9.0",
+        "illuminate/cookie": "^8.0|^9.0",
+        "spatie/laravel-package-tools": "^1.9",
+        "spatie/laravel-googletagmanager": "^2.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",

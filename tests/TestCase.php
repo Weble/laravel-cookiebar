@@ -3,6 +3,7 @@
 namespace Weble\Cookiebar\Test;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Spatie\GoogleTagManager\GoogleTagManagerServiceProvider;
 use Weble\Cookiebar\CookiebarServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
@@ -10,6 +11,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
+            GoogleTagManagerServiceProvider::class,
             CookiebarServiceProvider::class,
         ];
     }

@@ -1,5 +1,7 @@
-<div id="cookiebar-banner"
-    class="cb-fixed cb-bottom-0 cb-w-full cb-py-4 cb-text-white cb-bg-black cb-shadow-top js-cookiebar cookiebar cb-z-50">
+<div
+    id="cookiebar-banner"
+    class="cb-fixed cb-bottom-0 cb-w-full cb-py-4 cb-text-white cb-bg-black cb-shadow-top js-cookiebar cookiebar cb-z-50"
+>
     <div class="cb-container cb-mx-auto cb-flex cb-flex-col cb-items-center cb-justify-center cb-text-center lg:cb-text-left cb-space-y-4">
 
         <span class="cookiebar__message">

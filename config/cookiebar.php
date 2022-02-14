@@ -14,17 +14,13 @@ return [
     'cookie_name' => '_cookieAdvancedAllowed',
 
     /*
-     * Set the cookie duration in days.  Default is 365 * 20.
+     * Set the cookie duration in days.  Default is 365 days.
      */
-    'cookie_lifetime' => 365 * 20,
-
-    /*
-     * Set the Google Tag Manager Code
-     */
-    'gtm_code' => env('GTM_CODE', ''),
+    'cookie_lifetime' => 365,
 
     /*
      * Consents
+     * The key is the one used by GTM Consent Mode
      */
     'gtag_consent' => [
         'required' => [
