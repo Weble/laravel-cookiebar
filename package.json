@@ -10,10 +10,7 @@
     "tiny-cookie": "^2.3.2"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
-    "laravel-mix": "^6.0.41",
-    "postcss": "^8.4.6",
-    "tailwindcss": "^3.0.19"
+    "laravel-mix": "^6.0.41"
   },
   "scripts": {
     "dev": "mix",
