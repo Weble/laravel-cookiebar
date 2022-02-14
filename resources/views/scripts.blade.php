@@ -1,4 +1,4 @@
-<script src="{{ asset('vendor/cookiebar/cookie.js') }}" defer="defer" ></script>
+<script src="{{ asset('vendor/cookiebar/cookie.js') }}" defer="defer" async></script>
 <script>
     window.addEventListener('load', () => {
         window.gtmCookieBar

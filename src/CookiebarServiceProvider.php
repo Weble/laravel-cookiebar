@@ -43,7 +43,7 @@ class CookiebarServiceProvider extends PackageServiceProvider
             return;
         }
 
-        $consents = json_decode($cookie);
+        $consents = json_decode($cookie, true);
         if (!$consents) {
             return;
         }

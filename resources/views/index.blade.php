@@ -4,4 +4,5 @@
     @endif
 
     @include('cookiebar::modal')
+    @include('cookiebar::scripts')
 @endif

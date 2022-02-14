@@ -2,10 +2,17 @@ import { getCookie, setCookie } from 'tiny-cookie';
 import { hasClass, hide, show , addClickTo } from './helper'
 
 window.gtmCookieBar = (() => ({
-    config: {},
+    config: {
+        cookieName: '_cookieAdvancedAllowed',
+        expirationInDays: 365,
+        gtag_consent: {
+
+        }
+    },
     configure: configure,
     init: init,
     setupTemplate: setupTemplate,
+    editConsents: _showModal
 }))();
 
 // 1
@@ -32,12 +39,12 @@ function init() {
         //gtag('consent', 'default', this.config.gtag_consent);
         return this;
     }
-/*
+
 
     // update consent
     Object.assign(this.config.gtag_consent, cookie);
-    _updateConsent(this.config);
-*/
+    //_updateConsent(this.config);
+
 
     return this;
 }
@@ -48,7 +55,7 @@ function setupTemplate() {
     addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
 
     // show modal
-    addClickTo('[data-cookiebar="modal-show"]', () => _showModal(this.config.gtag_consent));
+    addClickTo('[data-cookiebar="modal-show"]', () => _showModal());
 
     // hide modal
     addClickTo('[data-cookiebar="modal-hide"]', () => hide(document.getElementById('cookiebar-modal')));
@@ -121,7 +128,9 @@ function _updateConsent(config) {
     hide(document.getElementById('cookiebar-modal'))
 }
 
-function _showModal(consents) {
+function _showModal() {
+    const consents = this.config.gtag_consent;
+
     // check consent
     Object
         .keys(consents)
