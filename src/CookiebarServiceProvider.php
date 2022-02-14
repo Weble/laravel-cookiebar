@@ -21,9 +21,9 @@ class CookiebarServiceProvider extends PackageServiceProvider
             ->hasAssets()
             ->hasViews()
             ->hasTranslations()
-            ->hasViewComposer('cookiebar::index', fn(View $view) => $view->with([
+            ->hasViewComposer('cookiebar::index', fn (View $view) => $view->with([
                 'hasAlreadyConsented' => Cookie::has($this->cookieName()),
-                'consents' => $this->consents()
+                'consents' => $this->consents(),
             ]));
     }
 
@@ -39,12 +39,12 @@ class CookiebarServiceProvider extends PackageServiceProvider
     private function initConsents(): void
     {
         $cookie = Cookie::get($this->cookieName());
-        if (!$cookie) {
+        if (! $cookie) {
             return;
         }
 
         $consents = json_decode($cookie, true);
-        if (!$consents) {
+        if (! $consents) {
             return;
         }
 
@@ -61,7 +61,7 @@ class CookiebarServiceProvider extends PackageServiceProvider
     {
         $consents = $this
             ->consents()
-            ->map(fn(array $item) => $item['value'] ?? 'denied');
+            ->map(fn (array $item) => $item['value'] ?? 'denied');
 
         GoogleTagManagerFacade::defaultConsents($consents->toArray());
     }
@@ -75,13 +75,13 @@ class CookiebarServiceProvider extends PackageServiceProvider
     {
         $this->app->resolving(
             EncryptCookies::class,
-            fn(EncryptCookies $encryptCookies) => $encryptCookies->disableFor($this->cookieName())
+            fn (EncryptCookies $encryptCookies) => $encryptCookies->disableFor($this->cookieName())
         );
     }
 
     private function registerGoogleTagManagerConsentFacade()
     {
-        GoogleTagManager::macro('defaultConsents', fn(array $consents) => GoogleTagManagerFacade::push(['consent', 'default', $consents]));
-        GoogleTagManager::macro('updateConsents', fn(array $consents) => GoogleTagManagerFacade::push(['consent', 'update', $consents, ['event' => 'cookie_advanced_consent_updated'], [ ['event' => 'gtm.init_consent']]]));
+        GoogleTagManager::macro('defaultConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'default', $consents]));
+        GoogleTagManager::macro('updateConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'update', $consents, ['event' => 'cookie_advanced_consent_updated'], [ ['event' => 'gtm.init_consent']]]));
     }
 }
