@@ -14,7 +14,7 @@
                     </p>
                 </div>
                 <div class="cb-flex cb-flex-col cb-divide-y cb-px-10 cd-divide-gray-300">
-                    @foreach($cookiebarConfig['gtag_consent'] as $consent)
+                    @foreach($consents as $consent)
                         @if($consent['enabled'])
                             <div class="cb-py-5" >
                                 <div class="cb-flex cb-justify-between cb-items-center">
@@ -22,15 +22,6 @@
                                         <h2>
                                             {{ trans('cookiebar::consent.'.$consent['title'].'.title') }}
                                         </h2>
-{{--                                        <span class="cb-mt-1">--}}
-{{--                                            <svg class="cb-w-2" viewBox="0 0 14 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">--}}
-{{--                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">--}}
-{{--                                                    <g transform="translate(-738.000000, -2577.000000)">--}}
-{{--                                                        <polygon fill="currentColor" fill-rule="nonzero" points="744.999998 2584.39102 745.591279 2583.87604 752 2578.38285 750.817439 2577 744.999998 2581.98776 739.182561 2577 738 2578.38285 744.408718 2583.87604"></polygon>--}}
-{{--                                                    </g>--}}
-{{--                                                </g>--}}
-{{--                                            </svg>--}}
-{{--                                        </span>--}}
                                     </div>
                                     <div>
                                         <div class="form-check">
@@ -52,8 +43,11 @@
                     <button type="button" class="cb-px-6 cb-py-2 hover:underline" data-cookiebar="modal-hide">
                         {{ trans('cookiebar::modal.cancel') }}
                     </button>
-                    <button type="button" data-cookiebar="update-consent"
-                        class="cb-px-6 cb-py-2 cb-bg-blue-600 cb-text-white cb-rounded hover:cb-bg-blue-700 js-cookiebar-custom">
+                    <button
+                        type="button"
+                        data-cookiebar="update-consent"
+                        class="cb-px-6 cb-py-2 cb-bg-blue-600 cb-text-white cb-rounded hover:cb-bg-blue-700 js-cookiebar-custom"
+                    >
                         {{ trans('cookiebar::modal.save') }}
                     </button>
                 </div>

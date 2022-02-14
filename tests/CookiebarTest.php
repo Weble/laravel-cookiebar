@@ -44,7 +44,7 @@ class CookiebarTest extends TestCase
     /** @test */
     public function it_contains_the_necessary_css_classes_for_javascript_functionality()
     {
-        $html = view('dialog')
+        $html = view('layout')
             ->with([
                 'cookiebarConfig' => [
                     'gtag_consent' => [],

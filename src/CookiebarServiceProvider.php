@@ -23,6 +23,7 @@ class CookiebarServiceProvider extends PackageServiceProvider
             ->hasTranslations()
             ->hasViewComposer('cookiebar::index', fn(View $view) => $view->with([
                 'hasAlreadyConsented' => Cookie::has($this->cookieName()),
+                'consents' => $this->consents()
             ]));
     }
 
@@ -50,11 +51,17 @@ class CookiebarServiceProvider extends PackageServiceProvider
         GoogleTagManagerFacade::updateConsents($consents);
     }
 
+    private function consents(): Collection
+    {
+        return collect(config('cookiebar.gtag_consent', []))
+            ->except('required');
+    }
+
     private function setDefaultConsents(): void
     {
-        $consents = collect(config('cookiebar.gtag_consent', [])
-            ->except('required')
-            ->map(fn(array $item) => $item['value'] ?? 'denied'));
+        $consents = $this
+            ->consents()
+            ->map(fn(array $item) => $item['value'] ?? 'denied');
 
         GoogleTagManagerFacade::defaultConsents($consents->toArray());
     }
