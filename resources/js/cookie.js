@@ -51,6 +51,8 @@ function init() {
 
 // 3
 function setupTemplate() {
+    console.log(this.config);
+
     // update
     addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
 
@@ -86,6 +88,7 @@ function _updateConsentEvent(event, config) {
             });
     }
 
+    // MANAGE: select consents
     if (hasClass(target, 'js-cookiebar-custom')) {
         Object
             .keys(gtag_consent)
@@ -110,6 +113,10 @@ function _updateConsentEvent(event, config) {
 }
 
 function _updateConsent(config) {
+    if (! config) {
+        return
+    }
+
     const {cookieName, expirationInDays, gtag_consent} = config;
 
     setCookie(cookieName, JSON.stringify( gtag_consent), { expires: expirationInDays });
@@ -129,7 +136,17 @@ function _updateConsent(config) {
 }
 
 function _showModal(config) {
+    config = config || this.config;
+
+    if (! config) {
+     return
+    }
+
     const consents = config.gtag_consent;
+
+    if (! consents) {
+        return
+    }
 
     // check consent
     Object
