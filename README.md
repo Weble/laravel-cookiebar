@@ -60,8 +60,8 @@ Add this configuration to your ```tailwing.config.js``` file to set the colors
     },
     modal: {
         'drop': '', 
-        'primary': '',
-        'secondary': '',
+        'primary': '', // title
+        'secondary': '', // text
     checkbox: {
         'primary': '', // checked - border color
         'secondary': '', // unchecked color
