@@ -55,7 +55,7 @@ function setupTemplate() {
     addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
 
     // show modal
-    addClickTo('[data-cookiebar="modal-show"]', () => _showModal());
+    addClickTo('[data-cookiebar="modal-show"]', () => _showModal(this.config));
 
     // hide modal
     addClickTo('[data-cookiebar="modal-hide"]', () => hide(document.getElementById('cookiebar-modal')));
@@ -128,8 +128,8 @@ function _updateConsent(config) {
     hide(document.getElementById('cookiebar-modal'))
 }
 
-function _showModal() {
-    const consents = this.config.gtag_consent;
+function _showModal(config) {
+    const consents = config.gtag_consent;
 
     // check consent
     Object
