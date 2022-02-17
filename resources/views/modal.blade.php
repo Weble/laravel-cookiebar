@@ -26,7 +26,7 @@
                                     <div>
                                         <div class="">
                                             <input type="checkbox" value="1" id="{{$consent['title']}}" @if($consent['title'] === 'required') checked disabled @endif
-                                                class="appearance-none bg-cookiebar-modal-checkbox-icon h-5 w-5 border border-cookiebar-modal-checkbox-border rounded-sm bg-cookiebar-modal-checkbox-unchecked checked:bg-cookiebar-modal-checkbox-checked focus:outline-none transition duration-200 my-1 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" >
+                                                class="appearance-none bg-cookiebar-modal-checkbox-icon h-5 w-5 border border-cookiebar-modal-checkbox-primary rounded-sm bg-cookiebar-modal-checkbox-secondary checked:bg-cookiebar-modal-checkbox-primary focus:outline-none transition duration-200 my-1 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" >
                                         </div>
                                     </div>
                                 </div>
