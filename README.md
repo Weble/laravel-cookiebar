@@ -50,4 +50,45 @@ Usually this is done in a link / button in the footer of your website.
 
 By default the cookiebar is styled using Tailwind CSS.
 
+Add this configuration to your ```tailwing.config.js``` file to set the colors
+
+ ```js
+ cookiebar: {
+    banner: {
+        'primary': '', // bg - button
+        'secondary': '', // text - buttont
+    },
+    modal: {
+        'drop': '', 
+        'primary': '',
+        'secondary': '',
+    checkbox: {
+        'primary': '', // checked - border color
+        'secondary': '', // unchecked color
+    },
+    button: {
+        save: {
+            'primary': '', // button bg color
+            'secondary': '', // button text color
+            'hover': '', // button hover color
+        },
+    cancel: {
+        'secondary': '', // button text color
+        }
+    }
+},
+ ```
+
+Add this configuration to your ```tailwing.config.js``` file to set the checkbox icon
+
+```js
+...
+backgroundImage: theme => ({
+    ...
+    'cookiebar-modal-checkbox-icon': 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 20 20\'%3e%3cpath fill=\'none\' stroke=\'%23fff\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'3\' d=\'M6 10l3 3l6-6\'/%3e%3c/svg%3e")'
+    ...
+}),
+    ...
+```
+
 You can publish the views, assets and translations, and then edit the files in `resources/view/vendor/cookiebar/` to better suit your needs.
