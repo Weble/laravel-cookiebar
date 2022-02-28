@@ -94,7 +94,7 @@ function _updateConsentEvent(event, config) {
                 const checkbox = document.getElementById(key);
 
                 if (! checkbox) {
-                    gtag_consent[key] = gtag_consent[key].value;
+                    gtag_consent[key] = gtag_consent[key].value ?? 'denied';
                     return;
                 }
 
