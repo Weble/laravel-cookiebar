@@ -51,8 +51,6 @@ function init() {
 
 // 3
 function setupTemplate() {
-    console.log(this.config);
-
     // update
     addClickTo('[data-cookiebar="update-consent"]', (event) => _updateConsentEvent(event, this.config) );
 
@@ -96,6 +94,7 @@ function _updateConsentEvent(event, config) {
                 const checkbox = document.getElementById(key);
 
                 if (! checkbox) {
+                    gtag_consent[key] = gtag_consent[key].value;
                     return;
                 }
 
