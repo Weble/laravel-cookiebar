@@ -14,7 +14,7 @@ Copy the assets required to run the laravel cookiebar into your project.
 This includes the javascript file, the language files and the views.
 
 ```shell
- php artisan vendor:publish --provider="Weble\Cookiebar"
+ php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider"
 ```
 
 
