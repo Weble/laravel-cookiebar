@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'message'   => 'Questo sito si avvale di cookie necessari al suo funzionamento ed utili alle finalità illustrate nella cookie policy.',
+    'message'   => "This site makes use of cookies necessary for its operation and useful for the purposes illustrated in the <a :attributes>Cookie Policy</a>",
     'agree'     => 'Agree',
-    'dismiss'   => 'Usa solo i cookie di sistema',
-    'manage'    => 'Gestisci',
+    'dismiss'   => 'Use only necessary cookies',
+    'manage'    => 'Customize',
 ];
