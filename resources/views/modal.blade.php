@@ -24,10 +24,13 @@
                                         </h2>
                                     </div>
                                     <div>
-                                        <div class="">
-                                            <input type="checkbox" value="1" id="{{$consent['title']}}" @if($consent['title'] === 'required') checked disabled @endif
-                                                class="appearance-none bg-cookiebar-modal-checkbox-icon h-5 w-5 border border-cookiebar-modal-checkbox-primary rounded-sm bg-cookiebar-modal-checkbox-secondary checked:bg-cookiebar-modal-checkbox-primary focus:outline-none transition duration-200 my-1 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" >
-                                        </div>
+                                        <input
+                                            type="checkbox"
+                                            value="1"
+                                            id="{{$consent['title']}}"
+                                            @if($consent['title'] === 'required') checked disabled @endif
+                                            class="cookiebar-checkbox border border-black rounded"
+                                        >
                                     </div>
                                 </div>
                                 <div class="text-sm text-gray-500" >
@@ -55,3 +58,35 @@
         </div>
     </div>
 </div>
+
+@once
+    <style>
+        .cookiebar-checkbox {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.4em;
+            height: 1.4em;
+            transform: translateY(-0.075em);
+            display: grid;
+            place-content: center;
+        }
+
+        .cookiebar-checkbox::before {
+            content: "";
+            width: 0.8em;
+            height: 0.8em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em;
+            transform-origin: center center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        .cookiebar-checkbox:checked::before {
+            transform: scale(1);
+        }
+    </style>
+@endonce

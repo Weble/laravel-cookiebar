@@ -81,7 +81,7 @@ class CookiebarServiceProvider extends PackageServiceProvider
 
     private function registerGoogleTagManagerConsentFacade()
     {
-        GoogleTagManager::macro('defaultConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'default', $consents]));
+        GoogleTagManager::macro('defaultConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'default', $consents], ['event' => 'gtm.init_consent']));
         GoogleTagManager::macro('updateConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'update', $consents, ['event' => 'cookie_advanced_consent_updated'], [ ['event' => 'gtm.init_consent']]]));
     }
 }

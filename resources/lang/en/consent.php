@@ -14,15 +14,15 @@ return [
         'description' => 'These trackers help us to measure traffic and analyze your behavior with the goal of improving our service.',
     ],
     'functional_storage' => [
-        'title' => 'Funzionali',
-        'description' => 'Funzionali',
+        'title' => 'Functional',
+        'description' => 'Functional',
     ],
     'personalization_storage'=> [
-        'title' => 'Personalizzazione',
-        'description'=> 'Personalizzazione',
+        'title' => 'Customization',
+        'description'=> 'Customization',
     ],
     'security_storage' => [
-        'title' => 'Sicurezza',
-        'description' => 'Sicurezza',
+        'title' => 'Security',
+        'description' => 'Security',
     ],
 ];
