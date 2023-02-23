@@ -5,7 +5,10 @@ namespace Weble\Cookiebar;
 use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
+use Spatie\GoogleTagManager\DataLayer;
 use Spatie\GoogleTagManager\GoogleTagManager;
 use Spatie\GoogleTagManager\GoogleTagManagerFacade;
 use Spatie\LaravelPackageTools\Package;
@@ -29,26 +32,47 @@ class CookiebarServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        Blade::directive('gtag', function ($expression) {
+            return <<<EOT
+                <?php
+                    if ({$expression} instanceOf \Spatie\GoogleTagManager\DataLayer) {
+                         if (count(({$expression})->toArray()) === 3) {
+                            echo "gtag('".({$expression})->toArray()[0]."', '".({$expression})->toArray()[1]."', ".json_encode(({$expression})->toArray()[2]).")";
+                        }
+
+                        if (count(({$expression})->toArray()) === 2) {
+                            echo "gtag(({$expression})->toJson());";
+                        }
+                    }
+                ?>
+            EOT;
+        });
+
         $this->disableCookieEncryptionForCookiebar();
         $this->registerGoogleTagManagerConsentFacade();
 
-        $this->setDefaultConsents();
         $this->initConsents();
     }
 
     private function initConsents(): void
     {
         $cookie = Cookie::get($this->cookieName());
+
         if (! $cookie) {
+            $this->setDefaultConsents();
+
             return;
         }
 
         $consents = json_decode($cookie, true);
+
         if (! $consents) {
+            $this->setDefaultConsents();
+
             return;
         }
 
-        GoogleTagManagerFacade::updateConsents($consents);
+        $this->setDefaultConsents($consents);
     }
 
     private function consents(): Collection
@@ -57,13 +81,15 @@ class CookiebarServiceProvider extends PackageServiceProvider
             ->except('required');
     }
 
-    private function setDefaultConsents(): void
+    private function setDefaultConsents(?array $consents = null): void
     {
-        $consents = $this
+        $consents = $consents ?? $this
             ->consents()
-            ->map(fn (array $item) => $item['value'] ?? 'denied');
+            ->map(fn (array $item) => $item['value'] ?? 'denied')
+            ->toArray();
 
-        GoogleTagManagerFacade::defaultConsents($consents->toArray());
+        GoogleTagManagerFacade::defaultConsents($consents);
+//        GoogleTagManagerFacade::push('event', 'gtm.init_consent');
     }
 
     private function cookieName(): string
@@ -81,7 +107,8 @@ class CookiebarServiceProvider extends PackageServiceProvider
 
     private function registerGoogleTagManagerConsentFacade()
     {
-        GoogleTagManager::macro('defaultConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'default', $consents], ['event' => 'gtm.init_consent']));
-        GoogleTagManager::macro('updateConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'update', $consents, ['event' => 'cookie_advanced_consent_updated'], [ ['event' => 'gtm.init_consent']]]));
+        GoogleTagManager::macro('defaultConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'default', $consents]));
+//        GoogleTagManager::macro('updateConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'update', $consents]));
+
     }
 }
