@@ -34,17 +34,12 @@ function init() {
 
     const cookie = JSON.parse(getCookie(this.config.cookieName));
 
-    // default consent
     if (! cookie) {
-        //gtag('consent', 'default', this.config.gtag_consent);
         return this;
     }
 
-
     // update consent
     Object.assign(this.config.gtag_consent, cookie);
-    //_updateConsent(this.config);
-
 
     return this;
 }

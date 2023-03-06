@@ -5,12 +5,7 @@ namespace Weble\Cookiebar;
 use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Str;
-use Spatie\GoogleTagManager\DataLayer;
-use Spatie\GoogleTagManager\GoogleTagManager;
-use Spatie\GoogleTagManager\GoogleTagManagerFacade;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -24,6 +19,9 @@ class CookiebarServiceProvider extends PackageServiceProvider
             ->hasAssets()
             ->hasViews()
             ->hasTranslations()
+            ->hasViewComposer('cookiebar::default', fn (View $view) => $view->with([
+                'defaultConsents' => $this->defaultConsents()
+            ]))
             ->hasViewComposer('cookiebar::index', fn (View $view) => $view->with([
                 'hasAlreadyConsented' => Cookie::has($this->cookieName()),
                 'consents' => $this->consents(),
@@ -32,64 +30,34 @@ class CookiebarServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        Blade::directive('gtag', function ($expression) {
-            return <<<EOT
-                <?php
-                    if ({$expression} instanceOf \Spatie\GoogleTagManager\DataLayer) {
-                         if (count(({$expression})->toArray()) === 3) {
-                            echo "gtag('".({$expression})->toArray()[0]."', '".({$expression})->toArray()[1]."', ".json_encode(({$expression})->toArray()[2]).")";
-                        }
-
-                        if (count(({$expression})->toArray()) === 2) {
-                            echo "gtag(({$expression})->toJson());";
-                        }
-                    }
-                ?>
-            EOT;
-        });
-
         $this->disableCookieEncryptionForCookiebar();
-        $this->registerGoogleTagManagerConsentFacade();
-
-        $this->initConsents();
     }
 
-    private function initConsents(): void
+    private function defaultConsents(): Collection
     {
         $cookie = Cookie::get($this->cookieName());
 
         if (! $cookie) {
-            $this->setDefaultConsents();
-
-            return;
+            return $this->getConsents();
         }
 
         $consents = json_decode($cookie, true);
 
         if (! $consents) {
-            $this->setDefaultConsents();
-
-            return;
+            return $this->getConsents();
         }
 
-        $this->setDefaultConsents($consents);
+        return $this->getConsents($consents);
+    }
+
+    private function getConsents(?array $consents = null): Collection
+    {
+        return collect($consents) ?? $this->consents()->map(fn (array $item) => $item['value'] ?? 'denied');
     }
 
     private function consents(): Collection
     {
-        return collect(config('cookiebar.gtag_consent', []))
-            ->except('required');
-    }
-
-    private function setDefaultConsents(?array $consents = null): void
-    {
-        $consents = $consents ?? $this
-            ->consents()
-            ->map(fn (array $item) => $item['value'] ?? 'denied')
-            ->toArray();
-
-        GoogleTagManagerFacade::defaultConsents($consents);
-//        GoogleTagManagerFacade::push('event', 'gtm.init_consent');
+        return collect(config('cookiebar.gtag_consent', []))->except('required');
     }
 
     private function cookieName(): string
@@ -103,12 +71,5 @@ class CookiebarServiceProvider extends PackageServiceProvider
             EncryptCookies::class,
             fn (EncryptCookies $encryptCookies) => $encryptCookies->disableFor($this->cookieName())
         );
-    }
-
-    private function registerGoogleTagManagerConsentFacade()
-    {
-        GoogleTagManager::macro('defaultConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'default', $consents]));
-//        GoogleTagManager::macro('updateConsents', fn (array $consents) => GoogleTagManagerFacade::push(['consent', 'update', $consents]));
-
     }
 }
