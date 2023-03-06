@@ -19,7 +19,7 @@ class CookiebarServiceProvider extends PackageServiceProvider
             ->hasAssets()
             ->hasViews()
             ->hasTranslations()
-            ->hasViewComposer('cookiebar::default', fn (View $view) => $view->with([
+            ->hasViewComposer('cookiebar::default-consents', fn (View $view) => $view->with([
                 'defaultConsents' => $this->defaultConsents()
             ]))
             ->hasViewComposer('cookiebar::index', fn (View $view) => $view->with([
