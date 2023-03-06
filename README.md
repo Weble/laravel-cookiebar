@@ -13,10 +13,29 @@ composer require weble/laravel-cookiebar
 Copy the assets required to run the laravel cookiebar into your project.
 This includes the javascript file, the language files and the views.
 
+#### Publish All
+
 ```shell
  php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider"
 ```
 
+#### Publish Only Views
+
+```shell
+ php artisan vendor:publish --tag=cookiebar-views
+```
+
+#### Publish Only Assets
+
+```shell
+ php artisan vendor:publish --tag=cookiebar-assets
+```
+
+#### Publish Only Translations
+
+```shell
+ php artisan vendor:publish --tag=cookiebar-translations
+```
 
 ### Config - Optional
 
