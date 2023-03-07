@@ -118,10 +118,6 @@ function _updateConsent(config) {
     gtag('consent', 'update', gtag_consent);
 
     dataLayer.push({
-        'event': 'cookie_advanced_consent_updated'
-    });
-
-    dataLayer.push({
         'event': 'gtm.init_consent'
     });
 
