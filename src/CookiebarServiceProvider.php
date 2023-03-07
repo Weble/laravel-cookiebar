@@ -20,7 +20,7 @@ class CookiebarServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasTranslations()
             ->hasViewComposer('cookiebar::default-consents', fn (View $view) => $view->with([
-                'defaultConsents' => $this->defaultConsents()
+                'defaultConsents' => $this->defaultConsents(),
             ]))
             ->hasViewComposer('cookiebar::index', fn (View $view) => $view->with([
                 'hasAlreadyConsented' => Cookie::has($this->cookieName()),
