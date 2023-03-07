@@ -38,21 +38,21 @@ class CookiebarServiceProvider extends PackageServiceProvider
         $cookie = Cookie::get($this->cookieName());
 
         if (! $cookie) {
-            return $this->getConsents();
+            return $this->getDefaultConsents();
         }
 
         $consents = json_decode($cookie, true);
 
         if (! $consents) {
-            return $this->getConsents();
+            return $this->getDefaultConsents();
         }
 
-        return $this->getConsents($consents);
+        return collect($consents);
     }
 
-    private function getConsents(?array $consents = null): Collection
+    private function getDefaultConsents(): Collection
     {
-        return collect($consents) ?? $this->consents()->map(fn (array $item) => $item['value'] ?? 'denied');
+        return $this->consents()->map(fn (array $item) => $item['value'] ?? 'denied');
     }
 
     private function consents(): Collection
