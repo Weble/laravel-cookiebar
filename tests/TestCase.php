@@ -2,6 +2,7 @@
 
 namespace Weble\Cookiebar\Test;
 
+use Illuminate\Support\Str;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Spatie\GoogleTagManager\GoogleTagManagerServiceProvider;
 use Weble\Cookiebar\CookiebarServiceProvider;
@@ -14,6 +15,11 @@ abstract class TestCase extends OrchestraTestCase
             GoogleTagManagerServiceProvider::class,
             CookiebarServiceProvider::class,
         ];
+    }
+
+    protected function defineRoutes($router)
+    {
+        $router->view('/', 'layout');
     }
 
     /**
@@ -42,10 +48,52 @@ abstract class TestCase extends OrchestraTestCase
         $this->assertFalse($this->isConsentDialogDisplayed($html), 'Failed to assert that the consent dialog is not being displayed.');
     }
 
+    protected function assertDefaultConsentsDisplayed(string $html)
+    {
+        $this->assertTrue(
+            condition: $this->isDefaultConsentsDisplayed($html),
+            message: 'Failed to assert that the default consents are displayed.'
+        );
+    }
+
+    protected function assertDefaultConsentsAreNotDisplayed(string $html)
+    {
+        $this->assertFalse(
+            condition: $this->isDefaultConsentsDisplayed($html),
+            message: 'Failed to assert that the default consents is not being displayed.'
+        );
+    }
+
+    protected function assertDefaultConsentsAreGranted(string $html)
+    {
+        $this->assertTrue(
+            condition: $this->hasGrantedString($html),
+            message: 'Failed to assert that the cookie consents are displayed.'
+        );
+    }
+
+    protected function assertDefaultConsentsAreNotGranted(string $html)
+    {
+        $this->assertFalse(
+            condition: $this->hasGrantedString($html),
+            message: 'Failed to assert that the default consents are displayed.'
+        );
+    }
+
     protected function isConsentDialogDisplayed(string $html): bool
     {
-        return \Illuminate\Support\Str::contains($html, [
+        return Str::contains($html, [
             trans('cookiebar::banner.message'),
         ]);
+    }
+
+    protected function isDefaultConsentsDisplayed(string $html): bool
+    {
+        return Str::contains($html, ['consent', 'default']);
+    }
+
+    protected function hasGrantedString(string $html): bool
+    {
+        return Str::contains($html, ['granted']);
     }
 }

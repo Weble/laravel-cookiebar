@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'title'         => 'Impostazioni di tracciamento',
-    'description'   => 'Il seguente pannello ti consente di esprimere le tue preferenze di consenso alle tecnologie di tracciamento che adottiamo per offrire le funzionalità e svolgere le attività sotto descritte.',
-    'cancel'        => 'Annulla',
-    'save'          => 'Salva e continua',
+    'title'         => 'Tracking preferences',
+    'description'   => 'The following panel allows you to customize your consent preferences for any tracking technology used to help us achieve the features and activities described below.',
+    'cancel'        => 'Cancel',
+    'save'          => 'Save and continue',
 ];

@@ -34,17 +34,12 @@ function init() {
 
     const cookie = JSON.parse(getCookie(this.config.cookieName));
 
-    // default consent
     if (! cookie) {
-        //gtag('consent', 'default', this.config.gtag_consent);
         return this;
     }
 
-
     // update consent
     Object.assign(this.config.gtag_consent, cookie);
-    //_updateConsent(this.config);
-
 
     return this;
 }
@@ -121,10 +116,6 @@ function _updateConsent(config) {
     setCookie(cookieName, JSON.stringify( gtag_consent), { expires: expirationInDays });
 
     gtag('consent', 'update', gtag_consent);
-
-    dataLayer.push({
-        'event': 'cookie_advanced_consent_updated'
-    });
 
     dataLayer.push({
         'event': 'gtm.init_consent'

@@ -1,28 +1,28 @@
 <?php
 
 return [
-    'required'                  => [
-        'title'         => 'Strettamente necessari',
-        'description'   => 'Questi strumenti di tracciamento sono strettamente necessari per garantire il funzionamento e la fornitura del servizio che ci hai richiesto e, pertanto, non richiedono il tuo consenso.',
+    'required' => [
+        'title' => 'Strictly necessary',
+        'description' => 'These trackers are used for activities that are strictly necessary to operate or deliver the service you requested from us and, therefore, do not require you to consent.',
     ],
-    'ad_storage'                => [
-        'title'         => 'Targeting e Pubblicità',
-        'description'   => 'Questi strumenti di tracciamento ci consentono di fornirti contenuti commerciali personalizzati in base al tuo comportamento e di gestire, fornire e tracciare gli annunci pubblicitari.',
+    'ad_storage' => [
+        'title' => 'Targeting and Advertising',
+        'description' => 'These trackers help us to deliver personalized marketing content to you based on your behavior and to operate, serve and track ads.',
     ],
-    'analytics_storage'         => [
-        'title'         => 'Misurazione',
-        'description'   => 'Questi strumenti di tracciamento ci permettono di misurare il traffico e analizzare il tuo comportamento con l\'obiettivo di migliorare il nostro servizio.',
+    'analytics_storage' => [
+        'title' => 'Measurement',
+        'description' => 'These trackers help us to measure traffic and analyze your behavior with the goal of improving our service.',
     ],
-    'functional_storage'        => [
-        'title'         => 'Funzionali',
-        'description'   => 'Funzionali',
+    'functional_storage' => [
+        'title' => 'Functional',
+        'description' => 'Functional',
     ],
-    'personalization_storage'   => [
-        'title'         => 'Personalizzazione',
-        'description'   => 'Personalizzazione',
+    'personalization_storage'=> [
+        'title' => 'Customization',
+        'description'=> 'Customization',
     ],
-    'security_storage'          => [
-        'title'         => 'Sicurezza',
-        'description'   => 'Sicurezza',
+    'security_storage' => [
+        'title' => 'Security',
+        'description' => 'Security',
     ],
 ];

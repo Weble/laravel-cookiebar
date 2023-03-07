@@ -61,4 +61,52 @@ class CookiebarTest extends TestCase
         $this->assertStringContainsString('data-cookiebar="modal-show"', $html);
         $this->assertStringContainsString('data-cookiebar="modal-hide"', $html);
     }
+
+    /** @test */
+    public function it_will_show_the_cookie_consents()
+    {
+        $this->app['config']->set('cookiebar.enabled', true);
+
+        $html = view('layout')->render();
+
+        $this->assertDefaultConsentsDisplayed($html);
+    }
+
+    /** @test */
+    public function it_will_not_show_the_cookie_consents()
+    {
+        $this->app['config']->set('cookiebar.enabled', false);
+
+        $html = view('layout')->render();
+
+        $this->assertDefaultConsentsAreNotDisplayed($html);
+    }
+
+    /** @test */
+    public function it_will_show_the_cookie_consents_from_cookie()
+    {
+        $this->app['config']->set('cookiebar.enabled', true);
+
+        $consentsGranted = collect(config('cookiebar.gtag_consent', []))
+            ->except('required')
+            ->map(fn () => 'granted');
+
+        request()
+            ->cookies
+            ->set(config('cookiebar.cookie_name'), json_encode($consentsGranted, true));
+
+        $html = view('layout')->render();
+
+        $this->assertDefaultConsentsAreGranted($html);
+    }
+
+    /** @test */
+    public function it_will_show_the_default_cookie_consents()
+    {
+        $this->app['config']->set('cookiebar.enabled', true);
+
+        $html = view('layout')->render();
+
+        $this->assertDefaultConsentsAreNotGranted($html);
+    }
 }

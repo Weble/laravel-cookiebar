@@ -13,10 +13,29 @@ composer require weble/laravel-cookiebar
 Copy the assets required to run the laravel cookiebar into your project.
 This includes the javascript file, the language files and the views.
 
+#### Publish All
+
 ```shell
- php artisan vendor:publish --provider="Weble\Cookiebar"
+ php artisan vendor:publish --provider="Weble\Cookiebar\CookiebarServiceProvider"
 ```
 
+#### Publish Only Views
+
+```shell
+ php artisan vendor:publish --tag=cookiebar-views
+```
+
+#### Publish Only Assets
+
+```shell
+ php artisan vendor:publish --tag=cookiebar-assets
+```
+
+#### Publish Only Translations
+
+```shell
+ php artisan vendor:publish --tag=cookiebar-translations
+```
 
 ### Config - Optional
 
@@ -34,6 +53,10 @@ Once you've correctly [Setup Spatie GoogleTagManager](https://github.com/spatie/
 be sure to set the option in the cookiebar configuration file to fit your needs.
 
 Most of all, remember to enable the cookiebar and set the consents you need.
+
+Include ```cookiebar::index``` in your layout according to your needs, usually before closing the body tag;
+
+Include ```cookiebar::default-consents``` before ```googletagmanager::head```; 
 
 ## Reopening the consent modal.
 
@@ -83,6 +106,7 @@ Add this configuration to your ```tailwing.config.js``` file to set the checkbox
 
 ```js
 ...
+
 backgroundImage: theme => ({
     ...
     'cookiebar-modal-checkbox-icon': 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 20 20\'%3e%3cpath fill=\'none\' stroke=\'%23fff\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'3\' d=\'M6 10l3 3l6-6\'/%3e%3c/svg%3e")'
